@@ -111,11 +111,12 @@
                 <h1 class="h1 mb-3 font-weight-bold">Log In!</h1>
                 <div class="form-group">
                   <label class="col-form-label col-form-label-lg" for="username">USERNAME OR EMAIL</label>
-                  <input class="form-control form-control-lg" type="text" id="username">
+                  <input class="form-control form-control-lg" type="text" id="username" form="signin">
                   <label class="col-form-label col-form-label-lg" for="password">PASSWORD</label>
-                  <input class="form-control form-control-lg" type="text" id="username">
+                  <input class="form-control form-control-lg" type="text" id="password" form="signin">
                 </div>
-                <button class="btn btn-lg btn-success btn-block mt-5" type="submit">Log In</button>
+                <button class="btn btn-lg btn-success btn-block mt-5" type="submit" 
+                        form="signin">Log In</button>
                 <div class="text-center pt-4 pb-4">
                   <a href="#" class="card-link">Forgot Password?</a>
                 </div>
@@ -130,7 +131,7 @@
         </main>
       </div>
     </div>
-
+    <form id="signin" method="GET" action="/dashboard"></form>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>

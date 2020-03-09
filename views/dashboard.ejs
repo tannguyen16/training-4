@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <script src="https://kit.fontawesome.com/7bccef4198.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/stylesheets/style.css"/>
+  	<link href="https://stackpath.bootstrapcdn.com/bootswatch/4.4.1/darkly/bootstrap.min.css" rel="stylesheet" integrity="sha384-rCA2D+D9QXuP2TomtQwd+uP50EHjpafN+wruul0sXZzX/Da7Txn4tB9aLMZV4DZm" crossorigin="anonymous">  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <nav class="d-none d-md-block bg-dark sidebar">
+          <div class="sidebar-sticky">
+            <img src="/images/logo.png" alt="Codepen" id="logo-sidebar">
+            <h6 class="sidebar-heading d-flex justify-content-between align-items-center mt-4 mb-1 text-muted">
+              <span>CREATE</span>
+              <a class="d-flex align-items-center text-muted" href="#">
+              </a>
+            </h6>
+            <ul class="nav flex-column">
+              <li>
+                <div class="nav-dashboard-item">
+                  <i class="fas fa-box icon-cyan"></i>
+                  <a class="nav-dashboard-link" href="#">
+                    Pen
+                  </a>
+                </div>
+              </li>
+              <li>
+                <div class="nav-dashboard-item">
+                  <i class="fas fa-box icon-yellow"></i>
+                  <a class="nav-dashboard-link" href="#">
+                    Project
+                  </a>
+                </div>
+              </li>
+              <li>
+                <div class="nav-dashboard-item">
+                  <i class="fas fa-box icon-purple"></i>
+                  <a class="nav-dashboard-link" href="#">
+                    Collection
+                  </a>
+                </div>
+              </li>
+            </ul>
+            <h6 class="sidebar-heading d-flex justify-content-between align-items-center mt-4 mb-1 text-info">
+              <span>YOUR</span>
+              <a class="d-flex align-items-center text-muted" href="#">
+              </a>
+            </h6>
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  Dashboard
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  Profile
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  Pinned Items
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  Activity
+                </a>
+              </li>
+            </ul>
+            <h6 class="sidebar-heading d-flex justify-content-between align-items-center mt-4 mb-1 text-warning">
+              <span>EXPLORE</span>
+              <a class="d-flex align-items-center text-muted" href="#">
+              </a>
+            </h6>
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  Picks
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  Popular
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  Topics
+                </a>
+              </li>
+            </ul>
+            <h6 class="sidebar-heading d-flex justify-content-between align-items-center mt-4 mb-1 text-success">
+              <span>GROW</span>
+              <a class="d-flex align-items-center text-muted" href="#">
+              </a>
+            </h6>
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  Jobs
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  CodePen
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  Challenges
+                </a>
+              </li>
+            </ul>
+            <ul class="nav flex-column pt-3">
+              <li class="nav-item">
+                <a class="nav-link text-muted" href="#">
+                  Newsletter
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-muted" href="#">
+                  Blog
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-muted" href="#">
+                  Docs & Support
+                </a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+
+        <main role="main" class="ml-sm-auto col-main">
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+            <div class="col-lg-7">
+              <h1 class="h1 mb-3 font-weight-bold">Dashboard</h1>
+            </div>
+          </div>
+          <div class="main-content">
+            <ul class="nav nav-tabs">
+              <li class="nav-tabs-item">
+                <a class="nav-link active" data-toggle="tab" href="#pen">
+                  <i class="fas fa-box icon-cyan"></i>
+                  <span>Pen</span>
+                </a>
+              </li>
+              <li class="nav-tabs-item">
+                <a class="nav-link" data-toggle="tab" href="#projects">
+                  <i class="fas fa-box icon-yellow"></i>
+                  <span>Projects</span>
+                </a>
+              </li>
+              <li class="nav-tabs-item">
+                <a class="nav-link" data-toggle="tab" href="#collection">
+                  <i class="fas fa-box icon-purple"></i>
+                  <span>Collection</span>
+                </a>
+              </li>
+              <li class="nav-tabs-item">
+                <a class="nav-link" data-toggle="tab" href="#deleted">                  
+                  <i class="fas fa-box icon-grey"></i>
+                  <span>Deleted</span>
+                </a>
+              </li>
+            </ul>
+            <div id="dashboard-tab-content" class="tab-content">
+              <div class="tab-pane tab-pen fade active show" id="pen">
+                <div>
+                  <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="text" placeholder="Search">
+                    <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+                  </form>
+                </div>
+                <div class="item-grid pen-grid" >
+                    <% personalPens.forEach(pen=> { %>
+                    <div class="single-pen">
+                      <div class="thumbnail-wrap">
+                        <div class="grid-preview-image" style="background-image: url(<%= pen.background %>);"></div>
+                      </div>
+                      <div class="pen-title">
+                        <span><%= pen.title %> by <%= pen.author %></span>
+                      </div>
+                      <div class="pen-stats">
+                        <div class="pen-stat like">
+                          <i class="fas fa-heart"></i>                        
+                          <span><%= pen.like %></span>
+                        </div>
+                        <div class="pen-stat comment">
+                          <i class="fas fa-comment"></i>
+                          <span><%= pen.comment %></span>
+                        </div>
+                        <div class="pen-stat view">
+                          <i class="fas fa-eye"></i>
+                          <span><%= pen.view %></span>
+                        </div>
+                      </div>
+                    </div> 
+                    <% }); %>
+                </div>
+              </div>
+              <div class="tab-pane tab-projects fade" id="projects">
+                <div>
+                  <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="text" placeholder="Search">
+                    <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+                  </form>
+                </div>
+                <div class="item-grid pen-grid" >
+                    <% projectPens.forEach(pen=> { %>
+                    <div class="single-pen">
+                      <div class="thumbnail-wrap">
+                        <div class="grid-preview-image" style="background-image: url(<%= pen.background %>);"></div>
+                      </div>
+                      <div class="pen-title">
+                        <span><%= pen.title %> by <%= pen.author %></span>
+                      </div>
+                      <div class="pen-stats">
+                        <div class="pen-stat like">
+                          <i class="fas fa-heart"></i>                        
+                          <span><%= pen.like %></span>
+                        </div>
+                        <div class="pen-stat comment">
+                          <i class="fas fa-comment"></i>
+                          <span><%= pen.comment %></span>
+                        </div>
+                        <div class="pen-stat view">
+                          <i class="fas fa-eye"></i>
+                          <span><%= pen.view %></span>
+                        </div>
+                      </div>
+                    </div> 
+                    <% }); %>
+                </div>
+              </div>
+              <div class="tab-pane tab-collection fade" id="collection">
+                <div class="search-options" id="search-options">
+                  <span>ABCDEF</span>
+                </div>
+                <div class="item-grid pen-grid" >
+                    <% collectionPens.forEach(pen=> { %>
+                    <div class="single-pen">
+                      <div class="thumbnail-wrap">
+                        <div class="grid-preview-image" style="background-image: url(<%= pen.background %>);"></div>
+                      </div>
+                      <div class="pen-title">
+                        <span><%= pen.title %> by <%= pen.author %></span>
+                      </div>
+                      <div class="pen-stats">
+                        <div class="pen-stat like">
+                          <i class="fas fa-heart"></i>                        
+                          <span><%= pen.like %></span>
+                        </div>
+                        <div class="pen-stat comment">
+                          <i class="fas fa-comment"></i>
+                          <span><%= pen.comment %></span>
+                        </div>
+                        <div class="pen-stat view">
+                          <i class="fas fa-eye"></i>
+                          <span><%= pen.view %></span>
+                        </div>
+                      </div>
+                    </div> 
+                    <% }); %>
+                </div>
+              </div>
+              <div class="tab-pane tab-deleted fade" id="deleted">
+                <h1>You don't have any deleted Pens.</h1>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  </body>
+</html>

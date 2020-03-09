@@ -103,27 +103,28 @@
         </nav>
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10">
-          <input class="form-control form-control-dark w-100" type="text" placeholder="Search CodePen..." aria-label="Search">
+          <div id="search-header" class="d-flex">
+            <input class="form-control form-control-dark" type="text" placeholder="Search CodePen..." aria-label="Search">
+            <a href="/login" class="header-button">Log In</a>
+          </div>
           <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
             <div class="m-auto col-lg-7">
               <form class="form-signin" class="text-center">
                 <img src="/images/logo.png" alt="Codepen" height="52" width="276">
-                <h1 class="h1 mb-3 font-weight-bold">Log In!</h1>
+                <h1 class="h1 mb-3 font-weight-bold">Sign Up!</h1>
                 <div class="form-group">
-                  <label class="col-form-label col-form-label-lg" for="username">USERNAME OR EMAIL</label>
+                  <label class="col-form-label col-form-label-lg" for="name">NAME</label>
+                  <input class="form-control form-control-lg" type="text" id="name">
+                  <label class="col-form-label col-form-label-lg" for="username">USERNAME</label>
                   <input class="form-control form-control-lg" type="text" id="username">
+                  <label class="col-form-label col-form-label-lg" for="email">EMAIL</label>
+                  <input class="form-control form-control-lg" type="text" id="email">
                   <label class="col-form-label col-form-label-lg" for="password">PASSWORD</label>
-                  <input class="form-control form-control-lg" type="text" id="username">
+                  <input class="form-control form-control-lg" type="text" id="password">
+                  <label class="col-form-label col-form-label-lg" for="cfpassword">CONFIRM PASSWORD</label>
+                  <input class="form-control form-control-lg" type="text" id="cfpassword">
                 </div>
-                <button class="btn btn-lg btn-success btn-block mt-5" type="submit">Log In</button>
-                <div class="text-center pt-4 pb-4">
-                  <a href="#" class="card-link">Forgot Password?</a>
-                </div>
-                <div class="card">
-                  <div class="card-body text-center">
-                    Need an account? <a href="/signup" class="card-link">Sign up now!</a>
-                  </div>
-                </div>
+                <button class="btn btn-lg btn-success btn-block mt-5" type="submit">Sign Up</button>
               </form>
             </div>
           </div>
