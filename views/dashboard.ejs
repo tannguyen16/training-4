@@ -173,12 +173,46 @@
             </ul>
             <div id="dashboard-tab-content" class="tab-content">
               <div class="tab-pane tab-pen fade active show" id="pen">
-                <div>
-                  <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="text" placeholder="Search">
-                    <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-                  </form>
+                <div class="search-options" id="search-options">
+                  <div class="search-field">
+                    <form class="form-inline my-2 my-lg-0">
+                      <input class="form-control mr-sm-2" type="text" placeholder="Search">
+                      <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+                  </div>
+                  <div class="view-field">
+                    <select class="custom-select">
+                      <option selected="">View</option>
+                      <option value="1">All</option>
+                      <option value="2">Public</option>
+                      <option value="3">Private</option>
+                      <option value="4">Fork</option>
+                    </select>
+                  </div>
+                  <div class="tag-field">
+                    <input type="text" class="form-control" placeholder="Tags" id="tags">
+                  </div>
                 </div>
+
+                <div class="sort-options" id="sort-options">
+                  <div class="btn-group sort-field" role="group" aria-label="grid-list-options">
+                    <button type="button" class="btn btn-secondary">Grid</button>
+                    <button type="button" class="btn btn-secondary">List</button>
+                  </div>
+                  <div class="btn-group sort-direction" role="group" aria-label="sort-direction">
+                    <button type="button" class="btn btn-secondary"><i class="fas fa-chevron-up"></i></button>
+                    <button type="button" class="btn btn-secondary"><i class="fas fa-chevron-down"></i></button>
+                  </div>
+                  <div class="sortby-field">
+                    <select class="custom-select">
+                      <option selected="">Sort By</option>
+                      <option value="1">Date Created</option>
+                      <option value="2">Date Updated</option>
+                      <option value="3">Popularity</option>
+                    </select>
+                  </div>
+                </div>
+
                 <div class="item-grid pen-grid" >
                     <% personalPens.forEach(pen=> { %>
                     <div class="single-pen">
@@ -207,11 +241,44 @@
                 </div>
               </div>
               <div class="tab-pane tab-projects fade" id="projects">
-                <div>
-                  <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="text" placeholder="Search">
-                    <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-                  </form>
+                <div class="search-options" id="search-options">
+                  <div class="search-field">
+                    <form class="form-inline my-2 my-lg-0">
+                      <input class="form-control mr-sm-2" type="text" placeholder="Search">
+                      <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+                  </div>
+                  <div class="view-field">
+                    <select class="custom-select">
+                      <option selected="">View</option>
+                      <option value="1">All</option>
+                      <option value="2">Public</option>
+                      <option value="3">Private</option>
+                      <option value="4">Fork</option>
+                    </select>
+                  </div>
+                  <div class="tag-field">
+                    <input type="text" class="form-control" placeholder="Tags" id="tags">
+                  </div>
+                </div>
+
+                <div class="sort-options" id="sort-options">
+                  <div class="btn-group sort-field" role="group" aria-label="grid-list-options">
+                    <button type="button" class="btn btn-secondary">Grid</button>
+                    <button type="button" class="btn btn-secondary">List</button>
+                  </div>
+                  <div class="btn-group sort-direction" role="group" aria-label="sort-direction">
+                    <button type="button" class="btn btn-secondary"><i class="fas fa-chevron-up"></i></button>
+                    <button type="button" class="btn btn-secondary"><i class="fas fa-chevron-down"></i></button>
+                  </div>
+                  <div class="sortby-field">
+                    <select class="custom-select">
+                      <option selected="">Sort By</option>
+                      <option value="1">Date Created</option>
+                      <option value="2">Date Updated</option>
+                      <option value="3">Popularity</option>
+                    </select>
+                  </div>
                 </div>
                 <div class="item-grid pen-grid" >
                     <% projectPens.forEach(pen=> { %>
@@ -242,33 +309,69 @@
               </div>
               <div class="tab-pane tab-collection fade" id="collection">
                 <div class="search-options" id="search-options">
-                  <span>ABCDEF</span>
+                  <div class="search-field">
+                    <form class="form-inline my-2 my-lg-0">
+                      <input class="form-control mr-sm-2" type="text" placeholder="Search">
+                      <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+                  </div>
+                  <div class="view-field">
+                    <select class="custom-select">
+                      <option selected="">View</option>
+                      <option value="1">All</option>
+                      <option value="2">Public</option>
+                      <option value="3">Private</option>
+                      <option value="4">Fork</option>
+                    </select>
+                  </div>
+                  <div class="tag-field">
+                    <input type="text" class="form-control" placeholder="Tags" id="tags">
+                  </div>
+                </div>
+
+                <div class="sort-options" id="sort-options">
+                  <div class="btn-group sort-field" role="group" aria-label="grid-list-options">
+                    <button type="button" class="btn btn-secondary">Grid</button>
+                    <button type="button" class="btn btn-secondary">List</button>
+                  </div>
+                  <div class="btn-group sort-direction" role="group" aria-label="sort-direction">
+                    <button type="button" class="btn btn-secondary"><i class="fas fa-chevron-up"></i></button>
+                    <button type="button" class="btn btn-secondary"><i class="fas fa-chevron-down"></i></button>
+                  </div>
+                  <div class="sortby-field">
+                    <select class="custom-select">
+                      <option selected="">Sort By</option>
+                      <option value="1">Date Created</option>
+                      <option value="2">Date Updated</option>
+                      <option value="3">Popularity</option>
+                    </select>
+                  </div>
                 </div>
                 <div class="item-grid pen-grid" >
-                    <% collectionPens.forEach(pen=> { %>
-                    <div class="single-pen">
-                      <div class="thumbnail-wrap">
-                        <div class="grid-preview-image" style="background-image: url(<%= pen.background %>);"></div>
+                  <% collectionPens.forEach(pen=> { %>
+                  <div class="single-pen">
+                    <div class="thumbnail-wrap">
+                      <div class="grid-preview-image" style="background-image: url(<%= pen.background %>);"></div>
+                    </div>
+                    <div class="pen-title">
+                      <span><%= pen.title %> by <%= pen.author %></span>
+                    </div>
+                    <div class="pen-stats">
+                      <div class="pen-stat like">
+                        <i class="fas fa-heart"></i>                        
+                        <span><%= pen.like %></span>
                       </div>
-                      <div class="pen-title">
-                        <span><%= pen.title %> by <%= pen.author %></span>
+                      <div class="pen-stat comment">
+                        <i class="fas fa-comment"></i>
+                        <span><%= pen.comment %></span>
                       </div>
-                      <div class="pen-stats">
-                        <div class="pen-stat like">
-                          <i class="fas fa-heart"></i>                        
-                          <span><%= pen.like %></span>
-                        </div>
-                        <div class="pen-stat comment">
-                          <i class="fas fa-comment"></i>
-                          <span><%= pen.comment %></span>
-                        </div>
-                        <div class="pen-stat view">
-                          <i class="fas fa-eye"></i>
-                          <span><%= pen.view %></span>
-                        </div>
+                      <div class="pen-stat view">
+                        <i class="fas fa-eye"></i>
+                        <span><%= pen.view %></span>
                       </div>
-                    </div> 
-                    <% }); %>
+                    </div>
+                  </div> 
+                  <% }); %>
                 </div>
               </div>
               <div class="tab-pane tab-deleted fade" id="deleted">

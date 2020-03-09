@@ -228,6 +228,52 @@ body {
 #search-options {
   display: block;
   background-color: #2B303A;
+  padding: 10px 10px;
+  margin-bottom: 2px;
+  flex-direction: row;
+}
+
+.search-field {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.view-field {
+  margin-left: 10px;
+  display: inline-block; 
+}
+
+.tag-field {
+  margin-left: 10px;
+  display: inline-block; 
+  vertical-align: middle;
+}
+
+/*
+ * Sort Forms
+ */
+#sort-options {
+  display: block;
+  background-color: #2B303A;
+  padding: 10px 10px;
+  margin-bottom: 20px;
+  flex-direction: row;
+}
+
+.sort-field {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.sort-direction {
+  margin-left: 10px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.sortby-field {
+  margin-left: 10px;
+  display: inline-block; 
 }
 
 /*
