@@ -110,6 +110,10 @@ body {
 /*
  * Header
  */
+#search-header {
+  margin-top: 10px;
+}
+
 #search-header .header-button {
   margin-left: 30px;
   border: 1px solid grey;
@@ -118,6 +122,8 @@ body {
   text-align: center;
   padding: 5px 5px;
   border-radius: 5px;
+  height: calc(1.5em + 0.75rem + 2px);
+  width: 100px;
 }
 
 /*
