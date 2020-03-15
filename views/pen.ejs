@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <link rel="stylesheet" href="/stylesheets/pen.css"/>
+    <script src="https://kit.fontawesome.com/7bccef4198.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/stylesheets/pen.css"/>
+    <link rel="stylesheet" href="/stylesheets/style.css"/>
+    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.4.1/darkly/bootstrap.min.css" rel="stylesheet" integrity="sha384-rCA2D+D9QXuP2TomtQwd+uP50EHjpafN+wruul0sXZzX/Da7Txn4tB9aLMZV4DZm" crossorigin="anonymous"> 
+  </head>
+  <body>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+      <div class="d-flex" id="dashboard-header">
+        <h1 class="h1 mb-3 font-weight-bold">A Pen by Tan Nguyen</h1>
+        <div class="profile-dropdown" id="profile-dropdown">
+          <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <img src="/images/profile.jpeg" alt="profile" id="profile-picture" width="40px" height="40px">
+          </button>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#">Dashboard</a>
+            <a class="dropdown-item" href="#">Profile</a>
+            <a class="dropdown-item" href="#">New Pen</a>
+            <a class="dropdown-item" href="#">New Project</a>
+            <a class="dropdown-item" href="#">New Collection</a>
+            <a class="dropdown-item" href="#">Settings</a>
+            <a class="dropdown-item" href="#">Log Out</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="module">
+      <div class="handle" id="handle-1"></div>
+      <section class="panel" id="panel-1">
+        <div class="axial spill">
+          <iframe id="html-Iframe" src="htmlInner.html"></iframe>
+        </div>
+      </section>
+      <div class="handle" id="handle-2"></div>
+      <section class="panel" id="panel-2">
+        <div class="axial spill">
+          <iframe id="css-Iframe" src="cssInner.html"></iframe>
+        </div>
+      </section>
+      <div class="handle" id="handle-3"></div>
+      <section class="panel" id="panel-3">
+        <div class="axial spill">
+          <iframe id="js-Iframe" src="jsInner.html"></iframe>
+        </div>
+      </section>
+    </div>
+    <div class="render-handle" id="render-handle"></div>
+      <section class="render-panel" id="render-panel">
+        <p>Hello</p>
+      </section>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script type="text/javascript" src="/javascripts/editor.js"></script>
+    <script type="text/javascript" src="/javascripts/panel.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  </body>
+</html>

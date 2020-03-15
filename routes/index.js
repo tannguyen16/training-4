@@ -23,4 +23,8 @@ router.get('/dashboard', function(req, res, next) {
   res.render('dashboard', {title: 'Dashboard', personalPens, projectPens, collectionPens});
 });
 
+router.get('/pen', function(req, res, next) {
+  res.render('pen', {title: 'Pen'});
+});
+
 module.exports = router;

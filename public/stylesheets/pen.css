@@ -1,0 +1,97 @@
+body {
+    margin: 0;
+    background: grey;
+}
+
+#module {
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+}
+
+.panel {
+  display: flex;
+}
+
+.axial {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  overflow-x: scroll;
+}
+
+.spill {
+  min-height: 500px;  
+}
+
+.handle {
+  width: 20px;
+  background: #343436;
+  position: relative;
+  border-left: 1px solid rgba(255,255,255,0.1);
+  border-right: 1px solid rgba(0,0,0,0.4);
+  box-sizing: border-box;
+  cursor: col-resize;
+}
+
+.render-handle {
+  height: 20px;
+  background: #343436;
+  position: relative;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  border-bottom: 1px solid rgba(0,0,0,0.4);
+  box-sizing: border-box;
+  cursor: row-resize;
+  z-index: 10;
+}
+
+/* Only cosmetic style beyond this point */
+
+.handle.drag:after {
+  content: "";
+  width: 6px;
+  height: 6px;
+  display: inline-block;
+  -ms-transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+
+.handle.drag:nth-child(2):after {
+  border-top: 3px solid #5e5e5e;
+  border-right: 3px solid #5e5e5e;
+}
+
+.handle.drag:nth-child(4):after {
+  position: relative;
+  top: -3px;
+  border-bottom: 3px solid #5e5e5e;
+  border-left: 3px solid #5e5e5e;
+}
+
+/* Purely circumstantial content */
+
+p {
+  text-align: center;
+  font-family: times;
+  color: #f0ead6;
+  padding: 10px;
+  margin: 0;
+}
+
+#myIframe1 {
+  border: 1px solid blue;
+  width: 0;
+  height: 0;
+}
+#myIframe2 {
+  border: 1px solid red;
+  display: none;
+}
+#myIframe3 {
+  border: 1px solid green;
+  visibility: hidden;
+}
+#programmaticIframe {
+  border: 1px solid yellow;
+}
