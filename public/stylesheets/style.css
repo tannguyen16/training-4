@@ -295,6 +295,27 @@ body {
 /*
  * Pens
  */
+.d-block {
+  display: block;
+}
+
+.pen-title i {
+  vertical-align: top;
+  margin-left: 10px;
+}
+
+#profile-dropdown button {
+  margin-left: 10px;
+}
+
+#profile-dropdown .pin-dropdown {
+  display: inline;
+}
+
+#profile-dropdown .profile-picture-dropdown {
+  display: inline;
+}
+
 .single-pen {
   margin-left: 0;
   width: 100%;
