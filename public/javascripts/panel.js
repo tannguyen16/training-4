@@ -35,7 +35,7 @@ function initResize3(e) {
 function Resize1(e) {
   console.log(e);
   console.log(element1.style.width);
-  const e3Width = element3.style.width
+  const e3Width = element3.style.width;
   element1.style.width = (e.clientX - element1.offsetLeft) + 'px';
   element3.style.width = e3Width;
 }

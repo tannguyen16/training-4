@@ -10,7 +10,7 @@ body {
 }
 
 .panel {
-  display: flex;
+  width: 33.3%;
 }
 
 .axial {
