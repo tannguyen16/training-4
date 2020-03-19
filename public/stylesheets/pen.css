@@ -1,90 +1,60 @@
-body {
-    margin: 0;
-    background: grey;
+html, body {
+  margin: 0;
+  padding: 0;
+  background: grey;
+  width: 100%;
+  height: 100%;
 }
 
-#module {
+main {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -ms-flex-line-pack: stretch;
+      align-content: stretch;
   width: 100%;
+  height: 100%;
+}
+
+#editors-container {
+  background: blue;
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 auto;
+          flex: 1 1 auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+#editors-container .editor {
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 auto;
+          flex: 1 1 auto;
+  background: red;
   overflow: hidden;
 }
 
-.panel {
-  width: 33.3%;
-}
-
-.axial {
+#renderer-container {
+  background: white;
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 auto;
+          flex: 1 1 auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  width: 100%;
-  height: 100%;
-  overflow-x: scroll;
 }
 
-.spill {
-  min-height: 500px;  
+#renderer-container #renderer-iframe {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
 }
-
-.handle {
-  width: 20px;
-  background: #343436;
-  position: relative;
-  border-left: 1px solid rgba(255,255,255,0.1);
-  border-right: 1px solid rgba(0,0,0,0.4);
-  box-sizing: border-box;
-  cursor: col-resize;
-}
-
-.render-handle {
-  height: 20px;
-  background: #343436;
-  position: relative;
-  border-top: 1px solid rgba(255,255,255,0.1);
-  border-bottom: 1px solid rgba(0,0,0,0.4);
-  box-sizing: border-box;
-  cursor: row-resize;
-  z-index: 10;
-}
-
-/* Only cosmetic style beyond this point */
-
-.handle.drag:after {
-  content: "";
-  width: 6px;
-  height: 6px;
-  display: inline-block;
-  -ms-transform: rotate(-45deg);
-  -webkit-transform: rotate(-45deg);
-  transform: rotate(-45deg);
-}
-
-.handle.drag:nth-child(2):after {
-  border-top: 3px solid #5e5e5e;
-  border-right: 3px solid #5e5e5e;
-}
-
-.handle.drag:nth-child(4):after {
-  position: relative;
-  top: -3px;
-  border-bottom: 3px solid #5e5e5e;
-  border-left: 3px solid #5e5e5e;
-}
-
-/* Purely circumstantial content */
-
-p {
-  text-align: center;
-  font-family: times;
-  color: #f0ead6;
-  padding: 10px;
-  margin: 0;
-}
-
-#htmlIframe {
-  visibility: hidden;
-}
-#cssIframe {
-  visibility: hidden;
-}
-#jsIframe {
-  visibility: hidden;
-}
+/*# sourceMappingURL=main.css.map */

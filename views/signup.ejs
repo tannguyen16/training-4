@@ -109,20 +109,18 @@
           </div>
           <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
             <div class="m-auto col-lg-7">
-              <form class="form-signin" class="text-center">
+              <form class="form-signup" class="text-center" id="form-signup" method="POST" action="/user">
                 <img src="/images/logo.png" alt="Codepen" height="52" width="276">
                 <h1 class="h1 mb-3 font-weight-bold">Sign Up!</h1>
                 <div class="form-group">
-                  <label class="col-form-label col-form-label-lg" for="name">NAME</label>
-                  <input class="form-control form-control-lg" type="text" id="name">
                   <label class="col-form-label col-form-label-lg" for="username">USERNAME</label>
-                  <input class="form-control form-control-lg" type="text" id="username">
+                  <input class="form-control form-control-lg" type="text" id="username" name="username">
                   <label class="col-form-label col-form-label-lg" for="email">EMAIL</label>
-                  <input class="form-control form-control-lg" type="text" id="email">
+                  <input class="form-control form-control-lg" type="text" id="email" name="email">
                   <label class="col-form-label col-form-label-lg" for="password">PASSWORD</label>
-                  <input class="form-control form-control-lg" type="text" id="password">
+                  <input class="form-control form-control-lg" type="password" id="password" name="password">
                   <label class="col-form-label col-form-label-lg" for="cfpassword">CONFIRM PASSWORD</label>
-                  <input class="form-control form-control-lg" type="text" id="cfpassword">
+                  <input class="form-control form-control-lg" type="password" id="cfpassword" name="cfpassword">
                 </div>
                 <button class="btn btn-lg btn-success btn-block mt-5" type="submit">Sign Up</button>
               </form>

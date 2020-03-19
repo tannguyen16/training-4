@@ -1,66 +1,84 @@
-var element1 = document.getElementById('panel-1');
-var element2 = document.getElementById('panel-2');
-var element3 = document.getElementById('panel-3');
-var element4 = document.getElementById('render-panel');
+const iframeRenderer = document.querySelector('#renderer-iframe');
+const editors = {};
+const workingTime = 450;
+let workingTimeout = null;
 
+const renderTemplate = `<html>
+<head>
+  <style>
+  @@CSS@@
+  </style>
+</head>
+<body>
+  @@HTML@@
+  <script>
+  @@JS@@
+  </script>
+</body>
+</html>`;
 
-//create box in bottom-left
-var resizer1 = document.getElementById('handle-2');
-var resizer2 = document.getElementById('handle-3');
-var resizer3 = document.getElementById('render-handle');
-
-
-//box function onmousemove
-resizer1.addEventListener('mousedown', initResize1, false);
-resizer2.addEventListener('mousedown', initResize2, false);
-resizer3.addEventListener('mousedown', initResize3, false);
-
-//Window funtion mousemove & mouseup
-function initResize1(e) {
-   window.addEventListener('mousemove', Resize1, false);
-   window.addEventListener('mouseup', stopResize1, false);
+const refreshEditors = () => {
+  Object.values(editors).forEach(editor => {
+    editor.layout();
+  });
 }
 
-function initResize2(e) {
-   window.addEventListener('mousemove', Resize2, false);
-   window.addEventListener('mouseup', stopResize2, false);
+const renderContent = () => {
+  const output = renderTemplate
+                    .replace('@@HTML@@', editors.html.getValue())
+                    .replace('@@CSS@@', editors.css.getValue())
+                    .replace('@@JS@@', editors.js.getValue());
+
+  const renderer = iframeRenderer.contentWindow.document;
+  renderer.open();
+  renderer.write(output);
+  renderer.close();
 }
 
-function initResize3(e) {
-   window.addEventListener('mousemove', Resize3, false);
-   window.addEventListener('mouseup', stopResize3, false);
+const handleEditorUpdate = (e) => {
+  if (workingTimeout) clearTimeout(workingTimeout);
+  workingTimeout = setTimeout(renderContent, workingTime);
 }
 
-//resize the element
-function Resize1(e) {
-  console.log(e);
-  console.log(element1.style.width);
-  const e3Width = element3.style.width;
-  element1.style.width = (e.clientX - element1.offsetLeft) + 'px';
-  element3.style.width = e3Width;
-}
+Split(['#editors-container', '#renderer-container'], {
+  sizes: [50, 50],
+  direction: 'vertical',
+  onDrag: refreshEditors,
+  onDragEnd: refreshEditors,
+});
 
-function Resize2(e) {
-  element2.style.width = (e.clientX - element2.offsetLeft) + 'px';
-}
+Split(['#html-editor', '#css-editor', '#js-editor'], {
+  sizes: [33, 33, 33],
+  direction: 'horizontal',
+  onDrag: refreshEditors,
+  onDragEnd: refreshEditors,
+});
 
-function Resize3(e) {
-  console.log(e);
-  element4.style.height = (e.clientY - element4.offsetBottom) + 'px';
-}
+require.config({ paths: { 'vs': '/monaco-editor/min/vs' }});
+require(['vs/editor/editor.main'], function() {
+  
+  const htmlEditor = monaco.editor.create(
+    document.querySelector('#html-editor'), {
+      language: 'html',
+  });
+  
+  htmlEditor.onDidChangeModelContent(handleEditorUpdate);
+  editors.html = htmlEditor;
 
-//on mouseup remove windows functions mousemove & mouseup
-function stopResize1(e) {
-    window.removeEventListener('mousemove', Resize1, false);
-    window.removeEventListener('mouseup', stopResize1, false);
-}
+  const cssEditor = monaco.editor.create(
+    document.querySelector('#css-editor'), {
+      language: 'css',
+  });
+  cssEditor.onDidChangeModelContent(handleEditorUpdate);
+  editors.css = cssEditor;
 
-function stopResize2(e) {
-    window.removeEventListener('mousemove', Resize2, false);
-    window.removeEventListener('mouseup', stopResize2, false);
-}
+  const jsEditor = monaco.editor.create(
+    document.querySelector('#js-editor'), {
+      language: 'javascript',
+  });
+  jsEditor.onDidChangeModelContent(handleEditorUpdate);
+  editors.js = jsEditor;
 
-function stopResize3(e) {
-    window.removeEventListener('mousemove', Resize3, false);
-    window.removeEventListener('mouseup', stopResize3, false);
-}
+  monaco.editor.setTheme('vs-dark');
+  window.onresize = refreshEditors;
+});

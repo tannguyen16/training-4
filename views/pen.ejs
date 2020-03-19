@@ -2,10 +2,11 @@
 <html lang="en">
   <head>
     <!-- Required meta tags -->
-    <link rel="stylesheet" href="/stylesheets/pen.css"/>
     <script src="https://kit.fontawesome.com/7bccef4198.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="/stylesheets/pen.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/split.js/1.5.11/split.min.js"></script>
+    <script src="/monaco-editor/min/vs/loader.js"></script>
     <link rel="stylesheet" href="/stylesheets/style.css"/>
+    <link rel="stylesheet" href="/stylesheets/pen.css"/>
     <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.4.1/darkly/bootstrap.min.css" rel="stylesheet" integrity="sha384-rCA2D+D9QXuP2TomtQwd+uP50EHjpafN+wruul0sXZzX/Da7Txn4tB9aLMZV4DZm" crossorigin="anonymous"> 
   </head>
   <body>
@@ -61,31 +62,16 @@
         </div>
       </div>
     </div>
-    <div id="module">
-      <div class="handle" id="handle-1"></div>
-      <section class="panel" id="panel-1">
-        <div class="axial spill">
-          <iframe id="html-Iframe" src="htmlInner.html"></iframe>
-        </div>
-      </section>
-      <div class="handle" id="handle-2"></div>
-      <section class="panel" id="panel-2">
-        <div class="axial spill">
-          <iframe id="css-Iframe" src="cssInner.html"></iframe>
-        </div>
-      </section>
-      <div class="handle" id="handle-3"></div>
-      <section class="panel" id="panel-3">
-        <div class="axial spill">
-          <iframe id="js-Iframe" src="jsInner.html"></iframe>
-        </div>
-      </section>
-    </div>
-    <div class="render-handle" id="render-handle"></div>
-      <section class="render-panel" id="render-panel">
-        <p>Hello</p>
-      </section>
-    </div>
+    <main>
+      <div id="editors-container">
+        <div class="editor" id="html-editor"></div>
+        <div class="editor" id="css-editor"></div>
+        <div class="editor" id="js-editor"></div>
+      </div>
+      <div id="renderer-container">
+        <iframe id="renderer-iframe"></iframe>
+      </div>
+    </main>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
