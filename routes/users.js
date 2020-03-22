@@ -1,8 +1,8 @@
 const express = require('express');
-
-const router = express.Router();
 const bcrypt = require('bcrypt');
 const db = require('../models');
+
+const router = express.Router();
 
 router.post('/', async (req, res) => {
   const insertQuery = `INSERT INTO "Users"
@@ -23,10 +23,9 @@ router.post('/', async (req, res) => {
         },
         type: db.sequelize.QueryTypes.INSERT,
       });
-      res.status(201).json(newUserResult);
+      res.redirect('../../login');
     });
   } catch (err) {
-    console.error(err);
     res.status(500).send(err);
   }
 });
@@ -55,13 +54,14 @@ router.post('/login', async (req, res) => {
 
     bcrypt.compare(password, user[0].Password, (err, result) => {
       console.log(result);
-      if (result) res.redirect('/dashboard');
-      else {
+      if (result) {
+        req.session.user = user[0];
+        res.redirect('/dashboard');
+      } else {
         // TODO: Wrong password
       }
     });
   } catch (err) {
-    console.error(err);
     res.status(500).send(err);
   }
 });
