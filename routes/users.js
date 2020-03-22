@@ -11,11 +11,17 @@ router.post('/', async (req, res) => {
                             (:username, :email, :password, :date);`;
 
   const saltRounds = 10;
+  let error = '';
+  if (req.body.password !== req.body.cfpassword) {
+    error = 'CONFIRM_PASSWORD';
+    res.redirect(`/signup?error=${error}`);
+  }
+
   const { password } = req.body;
 
   try {
     bcrypt.hash(password, saltRounds, async (err, hash) => {
-      const newUserResult = await db.sequelize.query(insertQuery, {
+      await db.sequelize.query(insertQuery, {
         replacements: {
           ...req.body,
           password: hash,
@@ -23,7 +29,7 @@ router.post('/', async (req, res) => {
         },
         type: db.sequelize.QueryTypes.INSERT,
       });
-      res.redirect('../../login');
+      res.redirect('/login');
     });
   } catch (err) {
     res.status(500).send(err);
@@ -48,7 +54,8 @@ router.post('/login', async (req, res) => {
       });
 
       if (user.length === 0) {
-        // TODO: No user
+        const error = 'NO_USER';
+        res.redirect(`/login?error=${error}`);
       }
     }
 
@@ -58,7 +65,8 @@ router.post('/login', async (req, res) => {
         req.session.user = user[0];
         res.redirect('/dashboard');
       } else {
-        // TODO: Wrong password
+        const error = 'WRONG_PASSWORD';
+        res.redirect(`/login?error=${error}`);
       }
     });
   } catch (err) {

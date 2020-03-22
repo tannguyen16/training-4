@@ -7,6 +7,11 @@ const personalPens = require('./PersonalPens.json');
 const projectPens = require('./ProjectPens.json');
 const collectionPens = require('./CollectionPens.json');
 
+const ERROR = {
+  NO_USER: 'Cannot find username or email',
+  WRONG_PASSWORD: 'Wrong Password',
+  CONFIRM_PASSWORD: 'Password and Confirm password are not the same',
+};
 function requireLogin(req, res, next) {
   if (!req.user) {
     res.redirect('/login');
@@ -23,11 +28,20 @@ router.get('/', requireLogin, (req, res, next) => {
 });
 
 router.get('/login', (req, res, next) => {
-  res.render('login', { title: 'CodePen Login' });
+  let error = '';
+  if (req.query.error) {
+    error = ERROR[req.query.error];
+  }
+
+  res.render('login', { title: 'CodePen Login', error });
 });
 
 router.get('/signup', (req, res, next) => {
-  res.render('signup', { title: 'CodePen Signup' });
+  let error = '';
+  if (req.query.error) {
+    error = ERROR[req.query.error];
+  }
+  res.render('signup', { title: 'CodePen Signup', error });
 });
 
 router.get('/dashboard', requireLogin, (req, res, next) => {
@@ -43,10 +57,6 @@ router.get('/pen', requireLogin, (req, res, next) => {
 router.get('/logout', (req, res, next) => {
   req.session.reset();
   res.redirect('/');
-});
-
-router.get('/user/login', (req, res, next) => {
-  res.redirect('/login');
 });
 
 module.exports = router;

@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const session = require('client-sessions');
 const db = require('./models');
+const config = require('./config/config.json');
 
 db.sequelize
   .authenticate()
@@ -34,7 +35,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(session({
   cookieName: 'session',
-  secret: 'random_string_goes_here',
+  secret: config.sessionSecret,
   duration: 30 * 60 * 1000,
   activeDuration: 5 * 60 * 1000,
 }));
