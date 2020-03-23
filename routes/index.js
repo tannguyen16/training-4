@@ -29,19 +29,21 @@ router.get('/', requireLogin, (req, res, next) => {
 
 router.get('/login', (req, res, next) => {
   let error = '';
+  const errors = {};
   if (req.query.error) {
     error = ERROR[req.query.error];
   }
 
-  res.render('login', { title: 'CodePen Login', error });
+  res.render('login', { title: 'CodePen Login', error, errors });
 });
 
 router.get('/signup', (req, res, next) => {
   let error = '';
+  const errors = {};
   if (req.query.error) {
     error = ERROR[req.query.error];
   }
-  res.render('signup', { title: 'CodePen Signup', error });
+  res.render('signup', { title: 'CodePen Signup', error, errors });
 });
 
 router.get('/dashboard', requireLogin, (req, res, next) => {

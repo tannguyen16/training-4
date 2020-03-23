@@ -115,14 +115,27 @@
                 <div class="form-group">
                   <label class="col-form-label col-form-label-lg" for="username">USERNAME</label>
                   <input class="form-control form-control-lg" type="text" id="username" name="username">
+                  <% if (errors && errors.username) { %>
+                    <p class="text-danger"><%= errors.username %></p>
+                  <% } %>
                   <label class="col-form-label col-form-label-lg" for="email">EMAIL</label>
                   <input class="form-control form-control-lg" type="text" id="email" name="email">
+                  <% if (errors && errors.email) { %>
+                    <p class="text-danger"><%= errors.email %></p>
+                  <% } %>
                   <label class="col-form-label col-form-label-lg" for="password">PASSWORD</label>
                   <input class="form-control form-control-lg" type="password" id="password" name="password">
+                  <% if (errors && errors.password) { %>
+                    <p class="text-danger"><%= errors.password %></p>
+                  <% } %>
                   <label class="col-form-label col-form-label-lg" for="cfpassword">CONFIRM PASSWORD</label>
                   <input class="form-control form-control-lg" type="password" id="cfpassword" name="cfpassword">
+                  <% if (errors && errors.cfpassword) { %>
+                    <p class="text-danger"><%= errors.cfpassword %></p>
+                  <% } else { %>
+                    <p class="text-danger"><%= error %></p>
+                  <% } %>
                 </div>
-                <p class="text-danger"><%= error %></p>
                 <button class="btn btn-lg btn-success btn-block mt-5" type="submit">Sign Up</button>
               </form>
             </div>
