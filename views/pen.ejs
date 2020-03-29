@@ -4,32 +4,40 @@
     <!-- Required meta tags -->
     <script src="https://kit.fontawesome.com/7bccef4198.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/split.js/1.5.11/split.min.js"></script>
-    <script src="/monaco-editor/min/vs/loader.js"></script>
-    <link rel="stylesheet" href="/stylesheets/style.css"/>
-    <link rel="stylesheet" href="/stylesheets/pen.css"/>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.4.1/darkly/bootstrap.min.css" rel="stylesheet" integrity="sha384-rCA2D+D9QXuP2TomtQwd+uP50EHjpafN+wruul0sXZzX/Da7Txn4tB9aLMZV4DZm" crossorigin="anonymous"> 
+    <link rel="stylesheet" href="/stylesheets/style.css"/>
+    <script src="/monaco-editor/min/vs/loader.js"></script>
+    <link rel="stylesheet" href="/stylesheets/pen.css"/>
+
   </head>
   <body>
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
       <div class="d-flex" id="dashboard-header">
         <div class="d-block">
           <div class="pen-title">
-            <span class="h3 mb-3 font-weight-bold">Untitled</span>
+            <span class="h3 mb-3 font-weight-bold" id="pen-name">Untitled</span>
             <a href="#">
               <i class="fas fa-edit"></i>
             </a>
           </div>
           <h1 class="h6 mb-3 font-weight-normal">A Pen by Tan Nguyen</h1>
+          <div id="pen-id"><%= penId %></div>
+          <div id="html-code"><%= htmlCode %></div>
+          <div id="css-code"><%= cssCode %></div>
+          <div id="js-code"><%= jsCode %></div>
         </div>
         <div class="profile-dropdown" id="profile-dropdown">
           <button class="btn btn-secondary" type="button">
             <i class="fas fa-heart"></i>
           </button>
-          <button class="btn btn-secondary" type="button">
+          <button class="btn btn-secondary" type="button" id="save-button">
             <i class="fas fa-cloud"></i>
             <span>Save</span>
           </button>
-          <button class="btn btn-secondary" type="button">
+          <button class="btn btn-secondary" type="button" data-toggle="modal" data-target="#settingsModal">
             <i class="fas fa-cog"></i>
             <span>Settings</span>
           </button>
@@ -41,7 +49,7 @@
             <button class="btn btn-secondary" type="button" id="pinDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <i class="fas fa-thumbtack"></i>
             </button>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="pinDropdownButton">
               <a class="dropdown-item" href="#">Pinned Items</a>
             </div>
           </div>
@@ -49,7 +57,7 @@
             <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <img src="/images/profile.jpeg" alt="profile" id="profile-picture" width="40px" height="40px">
             </button>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="pinDropdownButton">
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
               <a class="dropdown-item" href="#">Dashboard</a>
               <a class="dropdown-item" href="#">Profile</a>
               <a class="dropdown-item" href="#">New Pen</a>
@@ -68,6 +76,54 @@
         <div class="editor" id="css-editor"></div>
         <div class="editor" id="js-editor"></div>
       </div>
+      <div class="row justify-content-center"> 
+          <div id="settingsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade text-left">
+              <div role="document" class="modal-dialog modal-lg">
+                  <div class="modal-content">
+                    <div class="modal-top">
+                      <div class="modal-header">
+                          <div class="tabs active" id="tab01">
+                              <h6 class="font-weight-bold">HTML</h6>
+                          </div>
+                          <div class="tabs" id="tab02">
+                              <h6 class="text-muted">CSS</h6>
+                          </div>
+                          <div class="tabs" id="tab03">
+                              <h6 class="text-muted">JavaScript</h6>
+                          </div>
+                      </div>
+                      <div class="modal-body p-0">
+                          <fieldset id="tab011" class="show">
+                              <div>
+                                  <h5 class="text-center mb-4 mt-0 pt-4">HTML</h5>
+                                  <h6 class="px-3">Add Class(es) to HTML</h6>
+                                  <input class="form-control form-control-lg" type="text" id="htmlExternal" name="htmlExternal">
+                              </div>
+                          </fieldset>
+                          <fieldset id="tab021">
+                              <div>
+                                  <h5 class="text-center mb-4 mt-0 pt-4">CSS</h5>
+                                  <h6 class="px-3">External CSS</h6>
+                                  <input class="form-control form-control-lg" type="text" id="cssExternal" name="cssExternal">
+                              </div>
+                          </fieldset>
+                          <fieldset id="tab031">
+                              <div>
+                                  <h5 class="text-center mb-4 mt-0 pt-4">JavaScript</h5>
+                                  <h6 class="px-3">External JavaScript</h6>
+                                  <input class="form-control form-control-lg" type="text" id="jsExternal" name="jsExternal">
+                              </div>
+                          </fieldset>
+                      </div>
+                      </div>
+                      <div class="line"></div>
+                      <div class="modal-footer d-flex flex-column justify-content-center border-0">
+                        <button id="modal-save-button" type="button" class="btn btn-primary" data-dismiss="modal">Save and Close</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
       <div id="renderer-container">
         <iframe id="renderer-iframe"></iframe>
       </div>
@@ -75,10 +131,6 @@
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script type="text/javascript" src="/javascripts/editor.js"></script>
     <script type="text/javascript" src="/javascripts/panel.js"></script>
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
   </body>
 </html>

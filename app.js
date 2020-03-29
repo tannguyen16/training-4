@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const session = require('client-sessions');
 const db = require('./models');
 const config = require('./config/config.json');
+const userRepositories = require('./repositories/userRepositories');
 
 db.sequelize
   .authenticate()
@@ -18,6 +19,7 @@ db.sequelize
 
 const index = require('./routes/index');
 const users = require('./routes/users');
+const pens = require('./routes/pens');
 
 const app = express();
 
@@ -41,13 +43,9 @@ app.use(session({
 }));
 
 app.use(async (req, res, next) => {
-  const selectUsernameQuery = 'SELECT * FROM "Users" WHERE "Username" = :username';
   if (req.session && req.session.user && req.session.user.Username) { // Check if session exists
     // lookup the user in the DB by pulling their email from the session
-    const user = await db.sequelize.query(selectUsernameQuery, {
-      replacements: { username: req.session.user.Username },
-      type: db.sequelize.QueryTypes.SELECT,
-    });
+    const user = await userRepositories.getUserByUsername(req.session.user.Username);
 
     if (user[0]) {
       req.user = user[0];
@@ -64,6 +62,7 @@ app.use(async (req, res, next) => {
 
 app.use('/', index);
 app.use('/user', users);
+app.use('/pen', pens);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

@@ -132,8 +132,9 @@
                   <input class="form-control form-control-lg" type="password" id="cfpassword" name="cfpassword">
                   <% if (errors && errors.cfpassword) { %>
                     <p class="text-danger"><%= errors.cfpassword %></p>
-                  <% } else { %>
-                    <p class="text-danger"><%= error %></p>
+                  <% } %>
+                  <% if (errors && errors.message) { %>
+                    <p class="text-danger"><%= errors.message %></p>
                   <% } %>
                 </div>
                 <button class="btn btn-lg btn-success btn-block mt-5" type="submit">Sign Up</button>

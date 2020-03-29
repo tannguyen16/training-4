@@ -2,8 +2,15 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const yup = require('yup');
 const db = require('../models');
+const userRepositories = require('../repositories/userRepositories');
 
 const router = express.Router();
+
+const ERROR = {
+  NO_USER: 'Cannot find username or email',
+  WRONG_PASSWORD: 'Wrong Password',
+  CONFIRM_PASSWORD: 'Password and Confirm password are not the same',
+};
 
 const userSignupSchema = yup.object().shape({
   username: yup
@@ -37,29 +44,18 @@ const userLoginSchema = yup.object().shape({
 
 router.post('/', async (req, res, next) => {
   const errors = {};
-  const insertQuery = `INSERT INTO "Users"
-                            ("Username", "Email", "Password", "CreatedDate")
-                            VALUES
-                            (:username, :email, :password, :date);`;
   const saltRounds = 10;
-  let error = '';
-
   try {
     const { password, cfpassword } = req.body;
     if (password !== cfpassword) {
-      error = 'CONFIRM_PASSWORD';
-      res.redirect(`/signup?error=${error}`);
+      errors.message = ERROR.CONFIRM_PASSWORD;
+      res.render('signup', {
+        title: 'Sign Up', errors,
+      });
     }
     await userSignupSchema.validate(req.body, { abortEarly: false });
     bcrypt.hash(password, saltRounds, async (err, hash) => {
-      await db.sequelize.query(insertQuery, {
-        replacements: {
-          ...req.body,
-          password: hash,
-          date: new Date(),
-        },
-        type: db.sequelize.QueryTypes.INSERT,
-      });
+      await userRepositories.insertUser(hash, req.body);
       res.redirect('/login');
     });
   } catch (err) {
@@ -69,7 +65,7 @@ router.post('/', async (req, res, next) => {
         errors[validationError.path] = validationError.message;
       }
       res.render('signup', {
-        title: 'Sign Up', errors, error: '',
+        title: 'Sign Up', errors,
       });
     } else {
       next(err);
@@ -79,26 +75,18 @@ router.post('/', async (req, res, next) => {
 
 router.post('/login', async (req, res, next) => {
   const { username, password } = req.body;
-  const selectUsernameQuery = 'SELECT * FROM "Users" WHERE "Username" = :username';
-  const selectEmailQuery = 'SELECT * FROM "Users" WHERE "Email" = :username';
-
-  const saltRounds = 10;
   const errors = {};
   try {
     await userLoginSchema.validate(req.body, { abortEarly: false });
-    let user = await db.sequelize.query(selectUsernameQuery, {
-      replacements: { username },
-      type: db.sequelize.QueryTypes.SELECT,
-    });
+    let user = await userRepositories.getUserByUsername(username);
     if (user.length === 0) {
-      user = await db.sequelize.query(selectEmailQuery, {
-        replacements: { username },
-        type: db.sequelize.QueryTypes.SELECT,
-      });
+      user = await userRepositories.getUserByEmail(username);
 
       if (user.length === 0) {
-        const error = 'NO_USER';
-        res.redirect(`/login?error=${error}`);
+        errors.message = ERROR.NO_USER;
+        res.render('login', {
+          title: 'Log In', errors,
+        });
       }
     }
 
@@ -107,8 +95,10 @@ router.post('/login', async (req, res, next) => {
         req.session.user = user[0];
         res.redirect('/dashboard');
       } else {
-        const error = 'WRONG_PASSWORD';
-        res.redirect(`/login?error=${error}`);
+        errors.message = ERROR.WRONG_PASSWORD;
+        res.render('login', {
+          title: 'Log In', errors,
+        });
       }
     });
   } catch (err) {
@@ -118,7 +108,7 @@ router.post('/login', async (req, res, next) => {
         errors[validationError.path] = validationError.message;
       }
       res.render('login', {
-        title: 'Log In', errors, error: '',
+        title: 'Log In', errors,
       });
     } else {
       next(err);

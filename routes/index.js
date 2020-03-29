@@ -7,11 +7,6 @@ const personalPens = require('./PersonalPens.json');
 const projectPens = require('./ProjectPens.json');
 const collectionPens = require('./CollectionPens.json');
 
-const ERROR = {
-  NO_USER: 'Cannot find username or email',
-  WRONG_PASSWORD: 'Wrong Password',
-  CONFIRM_PASSWORD: 'Password and Confirm password are not the same',
-};
 function requireLogin(req, res, next) {
   if (!req.user) {
     res.redirect('/login');
@@ -28,22 +23,13 @@ router.get('/', requireLogin, (req, res, next) => {
 });
 
 router.get('/login', (req, res, next) => {
-  let error = '';
   const errors = {};
-  if (req.query.error) {
-    error = ERROR[req.query.error];
-  }
-
-  res.render('login', { title: 'CodePen Login', error, errors });
+  res.render('login', { title: 'Log In', errors });
 });
 
 router.get('/signup', (req, res, next) => {
-  let error = '';
   const errors = {};
-  if (req.query.error) {
-    error = ERROR[req.query.error];
-  }
-  res.render('signup', { title: 'CodePen Signup', error, errors });
+  res.render('signup', { title: 'Sign Up', errors });
 });
 
 router.get('/dashboard', requireLogin, (req, res, next) => {
@@ -53,7 +39,7 @@ router.get('/dashboard', requireLogin, (req, res, next) => {
 });
 
 router.get('/pen', requireLogin, (req, res, next) => {
-  res.render('pen', { title: 'Pen' });
+  res.render('pen', { title: 'Pen', penId: '' });
 });
 
 router.get('/logout', (req, res, next) => {
