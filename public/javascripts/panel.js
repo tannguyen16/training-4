@@ -151,9 +151,6 @@ $(document).ready(() => {
         htmlExternal: htmlExternalArray,
         cssExternal: cssExternalArray,
         jsExternal: jsExternalArray,
-      },
-      (data, status) => {
-        alert(`Data: ${data}\nStatus: ${status}`);
       });
   });
 
