@@ -3,9 +3,13 @@ const iframeRenderer = document.querySelector('#renderer-iframe');
 const editors = {};
 const workingTime = 450;
 let workingTimeout = null;
-const htmlExternal = document.querySelector('#htmlExternal').value;
-const jsExternal = document.querySelector('#jsExternal').value;
-const cssExternal = document.querySelector('#cssExternal').value;
+const htmlExternal = document.querySelector('#htmlExternal');
+const jsExternal = document.querySelector('#jsExternal');
+const cssExternal = document.querySelector('#cssExternal');
+
+const htmlCode = document.querySelector('#html-code');
+const jsCode = document.querySelector('#js-code');
+const cssCode = document.querySelector('#css-code');
 
 const renderTemplate = `<html>
 <head class="@@EXHTML@@">
@@ -30,23 +34,23 @@ const refreshEditors = () => {
 };
 
 const renderContent = () => {
-  const jsExternalLink = `<script src="${jsExternal}"></script>`;
-  const cssExternalLink = `<link href="${cssExternal}" rel="stylesheet">`;
+  const jsExternalLink = `<script src="${jsExternal.value}"></script>`;
+  const cssExternalLink = `<link href="${cssExternal.value}" rel="stylesheet">`;
 
   let output = renderTemplate
     .replace('@@HTML@@', editors.html.getValue())
     .replace('@@CSS@@', editors.css.getValue())
     .replace('@@JS@@', editors.js.getValue());
 
-  if (htmlExternal) {
+  if (htmlExternal.value) {
     output = output
-      .replace('@@EXHTML@@', htmlExternal);
+      .replace('@@EXHTML@@', htmlExternal.value);
   } else {
     output = output
       .replace('@@EXHTML@@', '');
   }
 
-  if (cssExternal) {
+  if (cssExternal.value) {
     output = output
       .replace('@@EXCSS@@', cssExternalLink);
   } else {
@@ -54,7 +58,7 @@ const renderContent = () => {
       .replace('@@EXCSS@@', '');
   }
 
-  if (jsExternal) {
+  if (jsExternal.value) {
     output = output
       .replace('@@EXJS@@', jsExternalLink);
   } else {
@@ -117,6 +121,11 @@ require(['vs/editor/editor.main'], () => {
 
   monaco.editor.setTheme('vs-dark');
   window.onresize = refreshEditors;
+
+  console.log(htmlCode.innerHTML);
+  if (htmlCode.innerHTML) editors.html.setValue(htmlCode.innerHTML);
+  if (cssCode.innerHTML) editors.css.setValue(cssCode.innerHTML);
+  if (jsCode.innerHTML) editors.js.setValue(jsCode.innerHTML);
 });
 
 $(document).ready(() => {
@@ -127,9 +136,10 @@ $(document).ready(() => {
     const penName = document.querySelector('#pen-name').innerHTML;
     const penId = document.querySelector('#pen-id').innerHTML;
 
-    const htmlExternalArray = ["", ""];
-    const cssExternalArray = ["", ""];
-    const jsExternalArray = ["", ""];
+    console.log(htmlExternal.value);
+    const htmlExternalArray = [htmlExternal.value, ""];
+    const cssExternalArray = [cssExternal.value, ""];
+    const jsExternalArray = [jsExternal.value, ""];
 
     $.post('/pen',
       {

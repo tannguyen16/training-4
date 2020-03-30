@@ -23,6 +23,18 @@ main {
   display: none;
 }
 
+#html-code {
+  display: none;
+}
+
+#css-code {
+  display: none;
+}
+
+#js-code {
+  display: none;
+}
+
 #editors-container {
   -webkit-box-flex: 1;
       -ms-flex: 1 1 auto;

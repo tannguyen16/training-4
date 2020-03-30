@@ -4,27 +4,40 @@ const yup = require('yup');
 const shortid = require('shortid');
 const db = require('../models');
 const penRepositories = require('../repositories/penRepositories');
+const requireLogin = require('../helpers/requireLogin');
 
 const router = express.Router();
 
-router.post('/', async (req, res, next) => {
+router.post('/', requireLogin, async (req, res, next) => {
   try {
     const penUri = shortid.generate();
-    const userId = req.session.user.UserId;
+    const userId = req.user.UserId;
     if (!req.body.penId) {
       await penRepositories.insertPen(userId, penUri, req.body);
       res.redirect(`/pen/${penUri}`);
     } else {
-      await penRepositories.updatePen(req.body.penId, req.body);
+      console.log(req.body);
+      await penRepositories.updatePen(req.body);
     }
   } catch (err) {
     next(err);
   }
 });
 
-router.get('/:penUri', async (req, res, next) => {
+router.get('/:penUri', requireLogin, async (req, res, next) => {
   try {
-    res.render('pen', { title: 'Pen', penId: '' });
+    const pen = await penRepositories.getPenByURI(req.params.penUri);
+    const penId = pen.PenId;
+    const htmlCode = pen.HtmlCode;
+    const cssCode = pen.CssCode;
+    const jsCode = pen.JsCode;
+    const htmlExternal = pen.HtmlExternal[0];
+    const cssExternal = pen.CssExternal[0];
+    const jsExternal = pen.JsExternal[0];
+
+    res.render('pen', {
+      title: 'Pen', penId, htmlCode, cssCode, jsCode, htmlExternal, cssExternal, jsExternal,
+    });
   } catch (err) {
     next(err);
   }

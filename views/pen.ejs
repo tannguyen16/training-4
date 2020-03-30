@@ -97,21 +97,25 @@
                               <div>
                                   <h5 class="text-center mb-4 mt-0 pt-4">HTML</h5>
                                   <h6 class="px-3">Add Class(es) to HTML</h6>
-                                  <input class="form-control form-control-lg" type="text" id="htmlExternal" name="htmlExternal">
+                                  <input class="form-control form-control-lg" type="text" id="htmlExternal" name="htmlExternal" 
+                                          value="<%= (htmlExternal) ? htmlExternal : '' %>">
                               </div>
                           </fieldset>
                           <fieldset id="tab021">
                               <div>
                                   <h5 class="text-center mb-4 mt-0 pt-4">CSS</h5>
                                   <h6 class="px-3">External CSS</h6>
-                                  <input class="form-control form-control-lg" type="text" id="cssExternal" name="cssExternal">
+                                  <input class="form-control form-control-lg" type="text" id="cssExternal" name="cssExternal"
+                                          value="<%= (cssExternal) ? cssExternal : '' %>">
+
                               </div>
                           </fieldset>
                           <fieldset id="tab031">
                               <div>
                                   <h5 class="text-center mb-4 mt-0 pt-4">JavaScript</h5>
                                   <h6 class="px-3">External JavaScript</h6>
-                                  <input class="form-control form-control-lg" type="text" id="jsExternal" name="jsExternal">
+                                  <input class="form-control form-control-lg" type="text" id="jsExternal" name="jsExternal"
+                                          value="<%= (cssExternal) ? cssExternal : '' %>">
                               </div>
                           </fieldset>
                       </div>

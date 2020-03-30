@@ -42,7 +42,6 @@ const formatExternalArray = (array) => {
 
 const insertPen = async (userId, uri, data) => {
   try {
-    console.log(data);
     const insertQuery = `INSERT INTO "Pens"
                             ("UserId", "PenName", "HtmlCode", "HtmlExternal", "CssCode", "CssExternal", "JsCode", "JsExternal", "URI", "CreatedDate")
                             VALUES
@@ -60,17 +59,15 @@ const insertPen = async (userId, uri, data) => {
       type: db.sequelize.QueryTypes.INSERT,
     });
   } catch (err) {
-    console.log(err);
     throw Error(err);
   }
 };
 
-const updatePen = async (penId, data) => {
+const updatePen = async (data) => {
   try {
     const updateQuery = `UPDATE "Pens"
-                            ("PenName", "HtmlCode", "HtmlExternal", "CssCode", "CssExternal", "JsCode", "JsExternal", "UpdatedDate")
-                            VALUES
-                            (:penName, :htmlCode, :htmlExternal, :cssCode, :cssExternal, :jsCode, :jsExternal, :updatedDate);`;
+                            SET "PenName" = :penName, "HtmlCode" = :htmlCode, "HtmlExternal" = :htmlExternal, "CssCode" = :cssCode, "CssExternal" = :cssExternal, "JsCode" = :jsCode, "JsExternal" = :jsExternal, "UpdatedDate" = :updatedDate
+                            WHERE "PenId" = :penId`;
     await db.sequelize.query(updateQuery, {
       replacements: {
         ...data,

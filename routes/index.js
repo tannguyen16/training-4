@@ -7,13 +7,7 @@ const personalPens = require('./PersonalPens.json');
 const projectPens = require('./ProjectPens.json');
 const collectionPens = require('./CollectionPens.json');
 
-function requireLogin(req, res, next) {
-  if (!req.user) {
-    res.redirect('/login');
-  } else {
-    next();
-  }
-}
+const requireLogin = require('../helpers/requireLogin');
 
 /* GET home page. */
 router.get('/', requireLogin, (req, res, next) => {
@@ -39,7 +33,9 @@ router.get('/dashboard', requireLogin, (req, res, next) => {
 });
 
 router.get('/pen', requireLogin, (req, res, next) => {
-  res.render('pen', { title: 'Pen', penId: '' });
+  res.render('pen', {
+    title: 'Pen', penId: '', htmlCode: '', cssCode: '', jsCode: '', htmlExternal: '', cssExternal: '', jsExternal: '',
+  });
 });
 
 router.get('/logout', (req, res, next) => {
