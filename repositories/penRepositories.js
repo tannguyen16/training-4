@@ -30,7 +30,6 @@ const getPenByURI = async (uri) => {
 };
 
 const formatExternalArray = (array) => {
-  console.log(array);
   let s = '{';
   array.forEach((element) => {
     s = `${s}"${element}",`;

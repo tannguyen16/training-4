@@ -129,6 +129,21 @@ require(['vs/editor/editor.main'], () => {
 });
 
 $(document).ready(() => {
+  penNameContainer = $("#pen-name-container");
+  penNameEditContainer = $('#pen-name-edit-container');
+
+  const isEditting = false;
+
+  $(document).click((event) => {
+    if (event.target.closest('#pen-name-container') && !$('#pen-name-edit-container').is(":visible")) {
+      penNameContainer.hide();
+      penNameEditContainer.show();
+    } else if (!event.target.closest('#pen-name-edit-container') && $('#pen-name-edit-container').is(":visible")) {
+      penNameContainer.show();
+      penNameEditContainer.hide();
+    }
+  });
+
   $('#save-button').click((e) => {
     e.preventDefault();
     const htmlCode = editors.html.getValue();

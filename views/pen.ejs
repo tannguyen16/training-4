@@ -17,14 +17,14 @@
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
       <div class="d-flex" id="dashboard-header">
         <div class="d-block">
-          <div class="pen-name">
+          <div class="pen-name" id="pen-name-container">
             <span class="h3 mb-3 font-weight-bold" id="pen-name"><%= penName %></span>
             <a href="#">
-              <i class="fas fa-edit"></i>
+              <i class="fas fa-edit" id="pen-name-edit-button"></i>
             </a>
           </div>
           <div id="pen-name-edit-container">
-            <input name="pen-name-edit" id="pen-name-edit" minlength="1" maxlength="30" type="text" value="<%= penName %>"/>
+            <input class="h3 font-weight-bold" name="pen-name-edit" id="pen-name-edit" minlength="1" maxlength="30" type="text" value="<%= penName %>"/>
           </div>
           <h1 class="h6 mb-3 font-weight-normal">A Pen by Tan Nguyen</h1>
           <div id="pen-id"><%= penId %></div>
