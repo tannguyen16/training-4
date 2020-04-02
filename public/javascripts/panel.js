@@ -129,7 +129,8 @@ require(['vs/editor/editor.main'], () => {
 });
 
 $(document).ready(() => {
-  $('#save-button').click(() => {
+  $('#save-button').click((e) => {
+    e.preventDefault();
     const htmlCode = editors.html.getValue();
     const cssCode = editors.css.getValue();
     const jsCode = editors.js.getValue();

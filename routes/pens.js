@@ -28,6 +28,7 @@ router.get('/:penUri', requireLogin, async (req, res, next) => {
   try {
     const pen = await penRepositories.getPenByURI(req.params.penUri);
     const penId = pen.PenId;
+    const penName = pen.PenName;
     const htmlCode = pen.HtmlCode;
     const cssCode = pen.CssCode;
     const jsCode = pen.JsCode;
@@ -36,7 +37,7 @@ router.get('/:penUri', requireLogin, async (req, res, next) => {
     const jsExternal = pen.JsExternal[0];
 
     res.render('pen', {
-      title: 'Pen', penId, htmlCode, cssCode, jsCode, htmlExternal, cssExternal, jsExternal,
+      title: 'Pen', penId, htmlCode, cssCode, jsCode, htmlExternal, cssExternal, jsExternal, penName,
     });
   } catch (err) {
     next(err);

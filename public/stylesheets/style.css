@@ -299,7 +299,7 @@ body {
   display: block;
 }
 
-.pen-title i {
+.pen-name i {
   vertical-align: top;
   margin-left: 10px;
 }
@@ -324,7 +324,7 @@ body {
   border-radius: 5px;
 }
 
-.single-pen .pen-title {
+.single-pen .pen-name {
   margin: 10px 10px;
   font-weight: 800;
 }

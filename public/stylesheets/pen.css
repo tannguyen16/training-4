@@ -35,6 +35,10 @@ main {
   display: none;
 }
 
+#pen-name-edit-container {
+  display: none;
+}
+
 #editors-container {
   -webkit-box-flex: 1;
       -ms-flex: 1 1 auto;

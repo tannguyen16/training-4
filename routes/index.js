@@ -28,13 +28,13 @@ router.get('/signup', (req, res, next) => {
 
 router.get('/dashboard', requireLogin, (req, res, next) => {
   res.render('dashboard', {
-    title: 'Dashboard', personalPens, projectPens, collectionPens,
+    title: 'Dashboard', personalPens: [], projectPens: [], collectionPens: [],
   });
 });
 
 router.get('/pen', requireLogin, (req, res, next) => {
   res.render('pen', {
-    title: 'Pen', penId: '', htmlCode: '', cssCode: '', jsCode: '', htmlExternal: '', cssExternal: '', jsExternal: '',
+    title: 'Pen', penId: '', htmlCode: '', cssCode: '', jsCode: '', htmlExternal: '', cssExternal: '', jsExternal: '', penName: 'Untitled',
   });
 });
 
