@@ -3,10 +3,6 @@ const db = require('../models');
 
 const router = express.Router();
 
-const personalPens = require('./PersonalPens.json');
-const projectPens = require('./ProjectPens.json');
-const collectionPens = require('./CollectionPens.json');
-
 const requireLogin = require('../helpers/requireLogin');
 
 /* GET home page. */
