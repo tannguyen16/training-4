@@ -52,3 +52,11 @@ npm run test-migrate
 npm run test
 
 ```
+
+6. Run front-end test commands:  
+
+```
+npm run start-fetest
+npm run fetest (in another command shell)
+
+```

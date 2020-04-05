@@ -100,16 +100,27 @@
                               <div>
                                   <h5 class="text-center mb-4 mt-0 pt-4">HTML</h5>
                                   <h6 class="px-3">Add Class(es) to HTML</h6>
-                                  <input class="form-control form-control-lg" type="text" id="htmlExternal" name="htmlExternal" 
-                                          value="<%= (htmlExternal) ? htmlExternal : '' %>">
+                                  <input class="form-control form-control-sm" type="text" id="htmlClass" name="htmlClass" 
+                                          value="<%= (htmlClass) ? htmlClass : '' %>">
+                                  <h6 class="px-3">Add Data to HTML Head</h6>
+                                  <input class="form-control form-control-sm" type="text" id="htmlHead" name="htmlHead" 
+                                          value="<%= (htmlHead) ? htmlHead : '' %>">
                               </div>
                           </fieldset>
                           <fieldset id="tab021">
                               <div>
                                   <h5 class="text-center mb-4 mt-0 pt-4">CSS</h5>
                                   <h6 class="px-3">External CSS</h6>
-                                  <input class="form-control form-control-lg" type="text" id="cssExternal" name="cssExternal"
-                                          value="<%= (cssExternal) ? cssExternal : '' %>">
+                                    <div id="external-css-links"> 
+                                    <% cssExternal.forEach( external => { %>
+                                      <div id="external-css-<%= external.PenExternalId %>"> 
+                                        <input class="form-control form-control-sm cssExternal" type="text" data-url="<%= external.Url %>"
+                                              value="<%= external.Url %>">
+                                        <button class="delete-external-css" onclick="deleteExternal('css', <%= external.PenExternalId %>)">Delete</button>
+                                      </div>
+                                    <% }); %>
+                                    </div>
+                                  <button id="add-external-css-button">Add an external CSS link</button>
 
                               </div>
                           </fieldset>
@@ -117,8 +128,16 @@
                               <div>
                                   <h5 class="text-center mb-4 mt-0 pt-4">JavaScript</h5>
                                   <h6 class="px-3">External JavaScript</h6>
-                                  <input class="form-control form-control-lg" type="text" id="jsExternal" name="jsExternal"
-                                          value="<%= (cssExternal) ? cssExternal : '' %>">
+                                    <div id="external-js-links"> 
+                                    <% jsExternal.forEach( external => { %>
+                                      <div id="external-js-<%= external.PenExternalId %>"> 
+                                        <input class="form-control form-control-sm jsExternal" type="text" data-url="<%= external.Url %>"
+                                              value="<%= external.Url %>">
+                                        <button class="delete-external-css" onclick="deleteExternal('js', <%= external.PenExternalId %>)">Delete</button>
+                                      </div>
+                                    <% }); %>
+                                    </div>
+                                  <button id="add-external-js-button">Add an external JavaScript link</button>
                               </div>
                           </fieldset>
                       </div>

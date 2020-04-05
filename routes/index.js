@@ -30,7 +30,7 @@ router.get('/dashboard', requireLogin, (req, res, next) => {
 
 router.get('/pen', requireLogin, (req, res, next) => {
   res.render('pen', {
-    title: 'Pen', penId: '', htmlCode: '', cssCode: '', jsCode: '', htmlExternal: '', cssExternal: '', jsExternal: '', penName: 'Untitled',
+    title: 'Pen', penId: '', htmlCode: '', cssCode: '', jsCode: '', htmlClass: '', htmlHead: '', cssExternal: [], jsExternal: [], penName: 'Untitled',
   });
 });
 

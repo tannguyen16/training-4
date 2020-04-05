@@ -3,6 +3,17 @@ const db = require('../models');
 
 const router = express.Router();
 
+const PEN_CODE_TYPE = {
+  HTML: 0,
+  CSS: 1,
+  JAVASCRIPT: 2,
+};
+
+const PEN_EXTERNAL_TYPE = {
+  CSS: 1,
+  JAVASCRIPT: 2,
+};
+
 const getPenById = async (penId) => {
   try {
     const selectPenQuery = 'SELECT * FROM "Pens" WHERE "PenId" = :penId';
@@ -18,7 +29,7 @@ const getPenById = async (penId) => {
 
 const getPenByURI = async (uri) => {
   try {
-    const selectPenQuery = 'SELECT * FROM "Pens" WHERE "URI" = :uri';
+    const selectPenQuery = 'SELECT * FROM "Pens" WHERE "Uri" = :uri';
     const pen = await db.sequelize.query(selectPenQuery, {
       replacements: { uri },
       type: db.sequelize.QueryTypes.SELECT,
@@ -29,33 +40,125 @@ const getPenByURI = async (uri) => {
   }
 };
 
-const formatExternalArray = (array) => {
-  let s = '{';
-  array.forEach((element) => {
-    s = `${s}"${element}",`;
+const getPenCodeById = async (penId) => {
+  try {
+    const selectPenCodeQuery = `
+      SELECT * FROM "PenCode" WHERE "PenId" = :penId AND "CodeType" = :codeTypeHtml ORDER BY "CreatedDate" LIMIT 1;
+      SELECT * FROM "PenCode" WHERE "PenId" = :penId AND "CodeType" = :codeTypeCss ORDER BY "CreatedDate" LIMIT 1;
+      SELECT * FROM "PenCode" WHERE "PenId" = :penId AND "CodeType" = :codeTypeJs ORDER BY "CreatedDate" LIMIT 1;`;
+
+    const penCodes = await db.sequelize.query(selectPenCodeQuery, {
+      replacements: {
+        penId, codeTypeHtml: PEN_CODE_TYPE.HTML, codeTypeCss: PEN_CODE_TYPE.CSS, codeTypeJs: PEN_CODE_TYPE.JAVASCRIPT,
+      },
+      type: db.sequelize.QueryTypes.SELECT,
+    });
+    return penCodes;
+  } catch (err) {
+    throw Error(err);
+  }
+};
+
+const getPenExternalsById = async (penId, type) => {
+  try {
+    const selectPenCodeQuery = `
+      SELECT * FROM "PenExternals" WHERE "PenId" = :penId AND "Type" = :type;`;
+
+    const penExternals = await db.sequelize.query(selectPenCodeQuery, {
+      replacements: {
+        penId, type,
+      },
+      type: db.sequelize.QueryTypes.SELECT,
+    });
+    return penExternals;
+  } catch (err) {
+    throw Error(err);
+  }
+};
+
+const insertCodeToDb = async (insertCodeQuery, penId, codeType, data, transaction) => {
+  await db.sequelize.query(insertCodeQuery, {
+    replacements: {
+      penId,
+      codeType,
+      htmlClass: data.htmlClass,
+      htmlHead: data.htmlHead,
+      body: data.cssCode,
+      createdDate: new Date(),
+    },
+    transaction,
+    type: db.sequelize.QueryTypes.INSERT,
   });
-  s = s.slice(0, -1);
-  s += '}';
-  return s;
+};
+
+const insertExternalToDb = async (insertExternalQuery, penId, type, url, transaction) => {
+  await db.sequelize.query(insertExternalQuery, {
+    replacements: {
+      penId,
+      type,
+      url,
+      createdDate: new Date(),
+    },
+    transaction,
+    type: db.sequelize.QueryTypes.INSERT,
+  });
 };
 
 const insertPen = async (userId, uri, data) => {
   try {
-    const insertQuery = `INSERT INTO "Pens"
-                            ("UserId", "PenName", "HtmlCode", "HtmlExternal", "CssCode", "CssExternal", "JsCode", "JsExternal", "URI", "CreatedDate")
+    await db.sequelize.transaction(async (transaction) => {
+      const insertPenQuery = `INSERT INTO "Pens"
+                            ("UserId", "Name", "Uri", "CreatedDate")
                             VALUES
-                            (:userId, :penName, :htmlCode, :htmlExternal, :cssCode, :cssExternal, :jsCode, :jsExternal, :uri, :createdDate);`;
-    await db.sequelize.query(insertQuery, {
-      replacements: {
-        ...data,
-        userId,
-        uri,
-        htmlExternal: formatExternalArray(data['htmlExternal[]']),
-        cssExternal: formatExternalArray(data['cssExternal[]']),
-        jsExternal: formatExternalArray(data['jsExternal[]']),
-        createdDate: new Date(),
-      },
-      type: db.sequelize.QueryTypes.INSERT,
+                            (:userId, :name, :uri, :createdDate) 
+                            RETURNING "PenId";`;
+
+      const pen = await db.sequelize.query(insertPenQuery, {
+        replacements: {
+          name: data.penName,
+          userId,
+          uri,
+          createdDate: new Date(),
+        },
+        transaction,
+        type: db.sequelize.QueryTypes.INSERT,
+      });
+
+      const newPenId = pen[0][0].PenId;
+
+      const insertCodeQuery = `INSERT INTO "PenCode"
+                            ("PenId", "CodeType", "HtmlClass", "HtmlHead", "Body", "CreatedDate")
+                            VALUES
+                            (:penId, :codeType, :htmlClass, :htmlHead, :body, :createdDate);`;
+
+      await insertCodeToDb(insertCodeQuery, newPenId, PEN_CODE_TYPE.HTML, data, transaction);
+      await insertCodeToDb(insertCodeQuery, newPenId, PEN_CODE_TYPE.CSS, data, transaction);
+      await insertCodeToDb(insertCodeQuery, newPenId, PEN_CODE_TYPE.JAVASCRIPT, data, transaction);
+
+      const insertExternalQuery = `INSERT INTO "PenExternals"
+                            ("PenId", "Type", "Url", "CreatedDate")
+                            VALUES
+                            (:penId, :type, :url, :createdDate);`;
+
+      if (data['cssExternal[]']) {
+        if (Array.isArray(data['cssExternal[]'])) {
+          data['cssExternal[]'].forEach(async (url) => {
+            await insertExternalToDb(insertExternalQuery, newPenId, PEN_EXTERNAL_TYPE.CSS, url, transaction);
+          });
+        } else {
+          await insertExternalToDb(insertExternalQuery, newPenId, PEN_EXTERNAL_TYPE.CSS, data['cssExternal[]'], transaction);
+        }
+      }
+
+      if (data['jsExternal[]']) {
+        if (Array.isArray(data['jsExternal[]'])) {
+          data['jsExternal[]'].forEach(async (url) => {
+            await insertExternalToDb(insertExternalQuery, newPenId, PEN_EXTERNAL_TYPE.JAVASCRIPT, url, transaction);
+          });
+        } else {
+          await insertExternalToDb(insertExternalQuery, newPenId, PEN_EXTERNAL_TYPE.JAVASCRIPT, data['jsExternal[]'], transaction);
+        }
+      }
     });
   } catch (err) {
     throw Error(err);
@@ -65,20 +168,28 @@ const insertPen = async (userId, uri, data) => {
 const updatePen = async (data) => {
   try {
     const updateQuery = `UPDATE "Pens"
-                            SET "PenName" = :penName, "HtmlCode" = :htmlCode, "HtmlExternal" = :htmlExternal, "CssCode" = :cssCode, "CssExternal" = :cssExternal, "JsCode" = :jsCode, "JsExternal" = :jsExternal, "UpdatedDate" = :updatedDate
-                            WHERE "PenId" = :penId`;
+                            SET "Name" = :penName, "UpdatedDate" = :updatedDate
+                            WHERE "PenId" = :penId;
+                        UPDATE "PenCode"
+                            SET "Body" = :htmlCode, "HtmlClass" = :htmlClass, "HtmlHead" = :htmlHead, "CreatedDate" = :updatedDate
+                            WHERE "PenId" = :penId AND "CodeType" = :codeTypeHtml;
+                        UPDATE "PenCode"
+                            SET "Body" = :cssCode, "HtmlClass" = :htmlClass, "HtmlHead" = :htmlHead, "CreatedDate" = :updatedDate
+                            WHERE "PenId" = :penId AND "CodeType" = :codeTypeCss;
+                        UPDATE "PenCode"
+                            SET "Body" = :jsCode, "HtmlClass" = :htmlClass, "HtmlHead" = :htmlHead, "CreatedDate" = :updatedDate
+                            WHERE "PenId" = :penId AND "CodeType" = :codeTypeJs;`;
     await db.sequelize.query(updateQuery, {
       replacements: {
         ...data,
-        htmlExternal: formatExternalArray(data['htmlExternal[]']),
-        cssExternal: formatExternalArray(data['cssExternal[]']),
-        jsExternal: formatExternalArray(data['jsExternal[]']),
         updatedDate: new Date(),
+        codeTypeHtml: PEN_CODE_TYPE.HTML,
+        codeTypeCss: PEN_CODE_TYPE.CSS,
+        codeTypeJs: PEN_CODE_TYPE.JAVASCRIPT,
       },
       type: db.sequelize.QueryTypes.UPDATE,
     });
   } catch (err) {
-    console.log(err);
     throw Error(err);
   }
 };
@@ -99,8 +210,12 @@ const deletePen = async (penId) => {
 };
 
 module.exports = {
+  PEN_CODE_TYPE,
+  PEN_EXTERNAL_TYPE,
   getPenById,
   getPenByURI,
+  getPenCodeById,
+  getPenExternalsById,
   insertPen,
   updatePen,
   deletePen,

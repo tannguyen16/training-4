@@ -12,8 +12,8 @@ module.exports = {
         constraint "Pens_Users_UserId_fk"
           references "Users"
             on delete cascade,
-      "CreatedDate" date,
-      "UpdatedDate" date
+      "CreatedDate" timestamp,
+      "UpdatedDate" timestamp
     );`,
   ),
   down: (queryInterface, Sequelize) => queryInterface.dropTable('Pens'),

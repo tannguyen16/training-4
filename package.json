@@ -5,6 +5,8 @@
   "scripts": {
     "start": "node copyFile.js && node ./bin/www",
     "test": "cross-env NODE_ENV=test mocha --exit",
+    "start-fetest": "cross-env NODE_ENV=test node ./bin/www",
+    "fetest": "cross-env NODE_ENV=test testcafe chrome fe-tests/",
     "migrate": "npx sequelize-cli db:migrate",
     "test-migrate": "npx sequelize-cli db:migrate --env test"
   },

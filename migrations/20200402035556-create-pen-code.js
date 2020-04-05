@@ -15,7 +15,7 @@ module.exports = {
       "HtmlHead" text,
       "Body" text,
       "Hash" text,
-      "CreatedDate" date
+      "CreatedDate" timestamp
     );`,
   ),
   down: (queryInterface, Sequelize) => queryInterface.dropTable('PenCode'),

@@ -3,16 +3,18 @@ const iframeRenderer = document.querySelector('#renderer-iframe');
 const editors = {};
 const workingTime = 450;
 let workingTimeout = null;
-const htmlExternal = document.querySelector('#htmlExternal');
-const jsExternal = document.querySelector('#jsExternal');
-const cssExternal = document.querySelector('#cssExternal');
+const htmlClass = document.querySelector('#htmlClass');
+const htmlHead = document.querySelector('#htmlHead');
+const jsExternal = document.querySelector('.jsExternal');
+const cssExternal = document.querySelector('.cssExternal');
 
 const htmlCode = document.querySelector('#html-code');
 const jsCode = document.querySelector('#js-code');
 const cssCode = document.querySelector('#css-code');
 
 const renderTemplate = `<html>
-<head class="@@EXHTML@@">
+<head class="@@CLASSHTML@@">
+  @@HEADHTML@@
   @@EXCSS@@
   @@EXJS@@
   <style>
@@ -34,37 +36,44 @@ const refreshEditors = () => {
 };
 
 const renderContent = () => {
-  const jsExternalLink = `<script src="${jsExternal.value}"></script>`;
-  const cssExternalLink = `<link href="${cssExternal.value}" rel="stylesheet">`;
+  let output = renderTemplate;
 
-  let output = renderTemplate
-    .replace('@@HTML@@', editors.html.getValue())
-    .replace('@@CSS@@', editors.css.getValue())
-    .replace('@@JS@@', editors.js.getValue());
-
-  if (htmlExternal.value) {
+  if (htmlClass.value) {
     output = output
-      .replace('@@EXHTML@@', htmlExternal.value);
+      .replace('@@CLASSHTML@@', htmlClass.value);
   } else {
     output = output
-      .replace('@@EXHTML@@', '');
+      .replace('@@CLASSHTML@@', '');
   }
 
-  if (cssExternal.value) {
+  if (htmlHead.value) {
     output = output
-      .replace('@@EXCSS@@', cssExternalLink);
+      .replace('@@HEADHTML@@', htmlHead.value);
+  } else {
+    output = output
+      .replace('@@HEADHTML@@', '');
+  }
+
+  if (cssExternal) {
+    output = output
+      .replace('@@EXCSS@@', '');
   } else {
     output = output
       .replace('@@EXCSS@@', '');
   }
 
-  if (jsExternal.value) {
+  if (jsExternal) {
     output = output
-      .replace('@@EXJS@@', jsExternalLink);
+      .replace('@@EXJS@@', '');
   } else {
     output = output
       .replace('@@EXJS@@', '');
   }
+
+  output = output
+    .replace('@@HTML@@', editors.html.getValue())
+    .replace('@@CSS@@', editors.css.getValue())
+    .replace('@@JS@@', editors.js.getValue());
 
   const renderer = iframeRenderer.contentWindow.document;
   renderer.open();
@@ -122,11 +131,21 @@ require(['vs/editor/editor.main'], () => {
   monaco.editor.setTheme('vs-dark');
   window.onresize = refreshEditors;
 
-  console.log(htmlCode.innerHTML);
   if (htmlCode.innerHTML) editors.html.setValue(htmlCode.innerHTML);
   if (cssCode.innerHTML) editors.css.setValue(cssCode.innerHTML);
   if (jsCode.innerHTML) editors.js.setValue(jsCode.innerHTML);
 });
+
+
+function deleteExternal(type, id) {
+  if (type === 'css') {
+    const exCss = $(`#external-css-${id}`);
+    exCss.remove();
+  } else {
+    const exJs = $(`#external-js-${id}`);
+    exJs.remove();
+  }
+}
 
 $(document).ready(() => {
   penNameContainer = $("#pen-name-container");
@@ -139,6 +158,7 @@ $(document).ready(() => {
       penNameContainer.hide();
       penNameEditContainer.show();
     } else if (!event.target.closest('#pen-name-edit-container') && $('#pen-name-edit-container').is(":visible")) {
+      document.querySelector('#pen-name').innerHTML = document.querySelector('#pen-name-edit').value;
       penNameContainer.show();
       penNameEditContainer.hide();
     }
@@ -149,13 +169,27 @@ $(document).ready(() => {
     const htmlCode = editors.html.getValue();
     const cssCode = editors.css.getValue();
     const jsCode = editors.js.getValue();
-    const penName = document.querySelector('#pen-name').innerHTML;
+    let penName = document.querySelector('#pen-name').innerHTML;
+    if (document.querySelector('#pen-name-edit').value !== document.querySelector('#pen-name').innerHTML) {
+      penName = document.querySelector('#pen-name-edit').value;
+    }
     const penId = document.querySelector('#pen-id').innerHTML;
 
-    console.log(htmlExternal.value);
-    const htmlExternalArray = [htmlExternal.value, ""];
-    const cssExternalArray = [cssExternal.value, ""];
-    const jsExternalArray = [jsExternal.value, ""];
+    console.log(htmlClass.value);
+    // const htmlExternalArray = htmlExternal.value;
+    // const cssExternalArray = cssExternal.value;
+    // const jsExternalArray = jsExternal.value;
+    const cssExternalLinks = $('.cssExternal');
+    const jsExternalLinks = $('.jsExternal');
+
+    const cssExternalArray = [];
+    for (let i = 0; i < cssExternalLinks.length; i++) {
+      cssExternalArray.push($(cssExternalLinks[i]).val());
+    }
+    const jsExternalArray = [];
+    for (let i = 0; i < jsExternalLinks.length; i++) {
+      jsExternalArray.push($(jsExternalLinks[i]).val());
+    }
 
     $.post('/pen',
       {
@@ -164,14 +198,43 @@ $(document).ready(() => {
         jsCode,
         penId,
         penName,
-        htmlExternal: htmlExternalArray,
+        htmlClass: htmlClass.value,
+        htmlHead: htmlHead.value,
         cssExternal: cssExternalArray,
         jsExternal: jsExternalArray,
+      },
+      (data, status) => {
+        window.location.replace(`/pen/${data}`);
       });
   });
 
   $('#modal-save-button').click(() => {
     setTimeout(renderContent, workingTime);
+  });
+
+  const externalCssLinks = $("#external-css-links");
+  const externalJsLinks = $("#external-js-links");
+
+  let externalCssId = 0;
+  let externalJsId = 0;
+
+  $('#add-external-css-button').click(() => {
+    const externalInput = `<div id="external-css-${externalCssId}">
+                            <input class="form-control form-control-sm cssExternal" type="text" id="css-external-${externalCssId}">
+                            <button class="delete-external-css" id="delete-external-css-${externalCssId}" onclick="deleteExternal('css', ${externalCssId})">Delete</button>
+                          </div>`;
+
+    externalCssLinks.append(externalInput);
+    externalCssId += 1;
+  });
+
+  $('#add-external-js-button').click(() => {
+    const externalInput = `<div id="external-js-${externalJsId}">
+                            <input class="form-control form-control-sm jsExternal" type="text" id="js-external-${externalJsId}">
+                            <button class="delete-external-js" id="delete-external-js-${externalJsId}" onclick="deleteExternal('js', ${externalCssId})>Delete</button>
+                          </div>`;
+    externalJsLinks.append(externalInput);
+    externalJsId += 1;
   });
 
   $('.tabs').click(function () {

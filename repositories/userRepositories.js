@@ -49,8 +49,21 @@ const insertUser = async (passwordHash, data) => {
   }
 };
 
+const deleteUsers = async () => {
+  try {
+    const deleteUser = 'DELETE FROM "Users"';
+
+    await db.sequelize.query(deleteUser, {
+      type: db.sequelize.QueryTypes.DELETE,
+    });
+  } catch (err) {
+    throw Error(err);
+  }
+};
+
 module.exports = {
   getUserByUsername,
   getUserByEmail,
   insertUser,
+  deleteUsers,
 };

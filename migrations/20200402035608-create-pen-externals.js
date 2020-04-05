@@ -9,7 +9,7 @@ module.exports = {
       "PenId" int not null,
       "Type" smallint,
       "Url" varchar(255),
-      "CreatedDate" date
+      "CreatedDate" timestamp
     );
     alter table "PenExternals"
       add constraint "PenExternals_Pens_PenId_fk"

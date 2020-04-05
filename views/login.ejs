@@ -109,7 +109,7 @@
           </div>          
           <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
             <div class="m-auto col-lg-7">
-              <form class="form-signin" class="text-center" method="POST" action="/user/login">
+              <form class="form-signin" id="login-form" class="text-center" method="POST" action="/user/login">
                 <img src="/images/logo.png" alt="Codepen" height="52" width="276">
                 <h1 class="h1 mb-3 font-weight-bold">Log In!</h1>
                 <div class="form-group">
@@ -124,10 +124,10 @@
                     <p class="text-danger"><%= errors.password %></p>
                   <% } %>
                   <% if (errors && errors.message) { %>
-                    <p class="text-danger"><%= errors.message %></p>
+                    <p class="text-danger" id="error-message"><%= errors.message %></p>
                   <% } %>
                 </div>
-                <button class="btn btn-lg btn-success btn-block mt-5" type="submit">Log In</button>
+                <button class="btn btn-lg btn-success btn-block mt-5" id="login-button" type="submit">Log In</button>
                 <div class="text-center pt-4 pb-4">
                   <a href="#" class="card-link">Forgot Password?</a>
                 </div>
