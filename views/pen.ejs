@@ -113,7 +113,7 @@
                                   <h6 class="px-3">External CSS</h6>
                                     <div id="external-css-links"> 
                                     <% cssExternal.forEach( external => { %>
-                                      <div id="external-css-<%= external.PenExternalId %>"> 
+                                      <div id="external-css-<%= external.PenExternalId %>" class="external-css-container"> 
                                         <input class="form-control form-control-sm cssExternal" type="text" data-url="<%= external.Url %>"
                                               value="<%= external.Url %>">
                                         <button class="delete-external-css" onclick="deleteExternal('css', <%= external.PenExternalId %>)">Delete</button>
@@ -130,7 +130,7 @@
                                   <h6 class="px-3">External JavaScript</h6>
                                     <div id="external-js-links"> 
                                     <% jsExternal.forEach( external => { %>
-                                      <div id="external-js-<%= external.PenExternalId %>"> 
+                                      <div id="external-js-<%= external.PenExternalId %>" class="external-js-container"> 
                                         <input class="form-control form-control-sm jsExternal" type="text" data-url="<%= external.Url %>"
                                               value="<%= external.Url %>">
                                         <button class="delete-external-css" onclick="deleteExternal('js', <%= external.PenExternalId %>)">Delete</button>

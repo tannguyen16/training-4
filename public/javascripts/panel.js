@@ -53,22 +53,26 @@ const renderContent = () => {
     output = output
       .replace('@@HEADHTML@@', '');
   }
+  const cssExternalLinks = $('.cssExternal');
+  const jsExternalLinks = $('.jsExternal');
 
-  if (cssExternal) {
-    output = output
-      .replace('@@EXCSS@@', '');
-  } else {
-    output = output
-      .replace('@@EXCSS@@', '');
+  let cssExternalString = "";
+  if (cssExternalLinks.length > 0) {
+    for (let i = 0; i < cssExternalLinks.length; i++) {
+      cssExternalString += `<link href="${$(cssExternalLinks[i]).val()}" rel="stylesheet">`;
+    }
   }
+  output = output
+    .replace('@@EXCSS@@', cssExternalString);
 
-  if (jsExternal) {
-    output = output
-      .replace('@@EXJS@@', '');
-  } else {
-    output = output
-      .replace('@@EXJS@@', '');
+  let jsExternalString = "";
+  if (jsExternalLinks.length > 0) {
+    for (let i = 0; i < jsExternalLinks.length; i++) {
+      jsExternalString += `<script src="${$(jsExternalLinks[i]).val()}"></script>`;
+    }
   }
+  output = output
+    .replace('@@EXJS@@', jsExternalString);
 
   output = output
     .replace('@@HTML@@', editors.html.getValue())
@@ -219,7 +223,7 @@ $(document).ready(() => {
   let externalJsId = 0;
 
   $('#add-external-css-button').click(() => {
-    const externalInput = `<div id="external-css-${externalCssId}">
+    const externalInput = `<div id="external-css-${externalCssId}" class="external-css-container">
                             <input class="form-control form-control-sm cssExternal" type="text" id="css-external-${externalCssId}">
                             <button class="delete-external-css" id="delete-external-css-${externalCssId}" onclick="deleteExternal('css', ${externalCssId})">Delete</button>
                           </div>`;
@@ -229,9 +233,9 @@ $(document).ready(() => {
   });
 
   $('#add-external-js-button').click(() => {
-    const externalInput = `<div id="external-js-${externalJsId}">
+    const externalInput = `<div id="external-js-${externalJsId}" class="external-js-container">
                             <input class="form-control form-control-sm jsExternal" type="text" id="js-external-${externalJsId}">
-                            <button class="delete-external-js" id="delete-external-js-${externalJsId}" onclick="deleteExternal('js', ${externalCssId})>Delete</button>
+                            <button class="delete-external-js" id="delete-external-js-${externalJsId}" onclick="deleteExternal('js', ${externalJsId})">Delete</button>
                           </div>`;
     externalJsLinks.append(externalInput);
     externalJsId += 1;

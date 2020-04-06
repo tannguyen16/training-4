@@ -66,6 +66,24 @@ main {
   display: flex;
 }
 
+.external-css-container input {
+  display: inline;
+  width: 60%;
+}
+
+.external-js-container input {
+  display: inline;
+  width: 60%;
+}
+
+.external-css-container button {
+  display: inline;
+}
+
+.external-js-container button {
+  display: inline;
+}
+
 #renderer-container {
   background-color: white;
   -webkit-box-flex: 1;
