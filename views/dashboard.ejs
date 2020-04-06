@@ -228,30 +228,6 @@
                 </div>
 
                 <div class="item-grid pen-grid" >
-                    <% personalPens.forEach(pen=> { %>
-                    <div class="single-pen">
-                      <div class="thumbnail-wrap">
-                        <div class="grid-preview-image" style="background-image: url(<%= pen.background %>);"></div>
-                      </div>
-                      <div class="pen-name">
-                        <span><%= pen.name %> by <%= pen.author %></span>
-                      </div>
-                      <div class="pen-stats">
-                        <div class="pen-stat like">
-                          <i class="fas fa-heart"></i>                        
-                          <span><%= pen.like %></span>
-                        </div>
-                        <div class="pen-stat comment">
-                          <i class="fas fa-comment"></i>
-                          <span><%= pen.comment %></span>
-                        </div>
-                        <div class="pen-stat view">
-                          <i class="fas fa-eye"></i>
-                          <span><%= pen.view %></span>
-                        </div>
-                      </div>
-                    </div> 
-                    <% }); %>
                 </div>
               </div>
               <div class="tab-pane tab-projects fade" id="projects">
@@ -295,30 +271,6 @@
                   </div>
                 </div>
                 <div class="item-grid pen-grid" >
-                    <% projectPens.forEach(pen=> { %>
-                    <div class="single-pen">
-                      <div class="thumbnail-wrap">
-                        <div class="grid-preview-image" style="background-image: url(<%= pen.background %>);"></div>
-                      </div>
-                      <div class="pen-name">
-                        <span><%= pen.name %> by <%= pen.author %></span>
-                      </div>
-                      <div class="pen-stats">
-                        <div class="pen-stat like">
-                          <i class="fas fa-heart"></i>                        
-                          <span><%= pen.like %></span>
-                        </div>
-                        <div class="pen-stat comment">
-                          <i class="fas fa-comment"></i>
-                          <span><%= pen.comment %></span>
-                        </div>
-                        <div class="pen-stat view">
-                          <i class="fas fa-eye"></i>
-                          <span><%= pen.view %></span>
-                        </div>
-                      </div>
-                    </div> 
-                    <% }); %>
                 </div>
               </div>
               <div class="tab-pane tab-collection fade" id="collection">
@@ -362,30 +314,6 @@
                   </div>
                 </div>
                 <div class="item-grid pen-grid" >
-                  <% collectionPens.forEach(pen=> { %>
-                  <div class="single-pen">
-                    <div class="thumbnail-wrap">
-                      <div class="grid-preview-image" style="background-image: url(<%= pen.background %>);"></div>
-                    </div>
-                    <div class="pen-name">
-                      <span><%= pen.name %> by <%= pen.author %></span>
-                    </div>
-                    <div class="pen-stats">
-                      <div class="pen-stat like">
-                        <i class="fas fa-heart"></i>                        
-                        <span><%= pen.like %></span>
-                      </div>
-                      <div class="pen-stat comment">
-                        <i class="fas fa-comment"></i>
-                        <span><%= pen.comment %></span>
-                      </div>
-                      <div class="pen-stat view">
-                        <i class="fas fa-eye"></i>
-                        <span><%= pen.view %></span>
-                      </div>
-                    </div>
-                  </div> 
-                  <% }); %>
                 </div>
               </div>
               <div class="tab-pane tab-deleted fade" id="deleted">

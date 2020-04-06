@@ -18,6 +18,7 @@ router.post('/', requireLogin, async (req, res, next) => {
       res.json(penUri);
     }
     await penRepositories.updatePen(req.body);
+    res.status(200).send();
   } catch (err) {
     next(err);
   }
@@ -34,12 +35,11 @@ router.get('/:penUri', requireLogin, async (req, res, next) => {
     const cssCode = penCode[1].Body;
     const jsCode = penCode[2].Body;
     const penName = pen.Name;
+    console.log(htmlCode);
     const penExternalsCss = await penRepositories.getPenExternalsById(penId, penRepositories.PEN_EXTERNAL_TYPE.CSS);
     const penExternalsJs = await penRepositories.getPenExternalsById(penId, penRepositories.PEN_EXTERNAL_TYPE.JAVASCRIPT);
     const cssExternal = penExternalsCss;
     const jsExternal = penExternalsJs;
-    console.log(cssExternal);
-    console.log(jsExternal);
 
     res.render('pen', {
       title: 'Pen', penId, htmlCode, cssCode, jsCode, htmlClass, htmlHead, cssExternal, jsExternal, penName,

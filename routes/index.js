@@ -8,7 +8,7 @@ const requireLogin = require('../helpers/requireLogin');
 /* GET home page. */
 router.get('/', requireLogin, (req, res, next) => {
   res.render('dashboard', {
-    title: 'Dashboard', personalPens, projectPens, collectionPens,
+    title: 'Dashboard',
   });
 });
 

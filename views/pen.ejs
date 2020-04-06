@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="/stylesheets/style.css"/>
     <script src="/monaco-editor/min/vs/loader.js"></script>
     <link rel="stylesheet" href="/stylesheets/pen.css"/>
-
   </head>
   <body>
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
@@ -27,10 +26,6 @@
             <input class="h3 font-weight-bold" name="pen-name-edit" id="pen-name-edit" minlength="1" maxlength="30" type="text" value="<%= penName %>"/>
           </div>
           <h1 class="h6 mb-3 font-weight-normal">A Pen by Tan Nguyen</h1>
-          <div id="pen-id"><%= penId %></div>
-          <div id="html-code"><%= htmlCode %></div>
-          <div id="css-code"><%= cssCode %></div>
-          <div id="js-code"><%= jsCode %></div>
         </div>
         <div class="profile-dropdown" id="profile-dropdown">
           <button class="btn btn-secondary" type="button">
@@ -123,7 +118,6 @@
                                     <% }); %>
                                     </div>
                                   <button id="add-external-css-button">Add an external CSS link</button>
-
                               </div>
                           </fieldset>
                           <fieldset id="tab031">
@@ -161,6 +155,13 @@
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script>
+      const penId = `<%= penId %>`;
+      const htmlCode = `<%- htmlCode %>`;
+      const cssCode = `<%- cssCode %>`;
+      const jsCode = `<%- jsCode %>`; 
+      console.log(penId);
+    </script>
     <script type="text/javascript" src="/javascripts/panel.js"></script>
   </body>
 </html>

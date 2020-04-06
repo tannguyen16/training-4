@@ -8,10 +8,6 @@ const htmlHead = document.querySelector('#htmlHead');
 const jsExternal = document.querySelector('.jsExternal');
 const cssExternal = document.querySelector('.cssExternal');
 
-const htmlCode = document.querySelector('#html-code');
-const jsCode = document.querySelector('#js-code');
-const cssCode = document.querySelector('#css-code');
-
 const renderTemplate = `<html>
 <head class="@@CLASSHTML@@">
   @@HEADHTML@@
@@ -135,9 +131,9 @@ require(['vs/editor/editor.main'], () => {
   monaco.editor.setTheme('vs-dark');
   window.onresize = refreshEditors;
 
-  if (htmlCode.innerHTML) editors.html.setValue(htmlCode.innerHTML);
-  if (cssCode.innerHTML) editors.css.setValue(cssCode.innerHTML);
-  if (jsCode.innerHTML) editors.js.setValue(jsCode.innerHTML);
+  if (htmlCode) editors.html.setValue(htmlCode);
+  if (cssCode) editors.css.setValue(cssCode);
+  if (jsCode) editors.js.setValue(jsCode);
 });
 
 
@@ -152,6 +148,8 @@ function deleteExternal(type, id) {
 }
 
 $(document).ready(() => {
+  console.log(penId);
+
   penNameContainer = $("#pen-name-container");
   penNameEditContainer = $('#pen-name-edit-container');
 
@@ -177,7 +175,6 @@ $(document).ready(() => {
     if (document.querySelector('#pen-name-edit').value !== document.querySelector('#pen-name').innerHTML) {
       penName = document.querySelector('#pen-name-edit').value;
     }
-    const penId = document.querySelector('#pen-id').innerHTML;
 
     console.log(htmlClass.value);
     // const htmlExternalArray = htmlExternal.value;
