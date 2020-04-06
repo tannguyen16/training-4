@@ -225,7 +225,9 @@ $(document).ready(() => {
   $('#add-external-css-button').click(() => {
     const externalInput = `<div id="external-css-${externalCssId}" class="external-css-container">
                             <input class="form-control form-control-sm cssExternal" type="text" id="css-external-${externalCssId}">
-                            <button class="delete-external-css" id="delete-external-css-${externalCssId}" onclick="deleteExternal('css', ${externalCssId})">Delete</button>
+                            <a href='#'>
+                              <i class="fas fa-trash delete-external-css" id="delete-external-css-${externalCssId}" onclick="deleteExternal('css', ${externalCssId})"></i>
+                            </a>
                           </div>`;
 
     externalCssLinks.append(externalInput);
@@ -235,7 +237,9 @@ $(document).ready(() => {
   $('#add-external-js-button').click(() => {
     const externalInput = `<div id="external-js-${externalJsId}" class="external-js-container">
                             <input class="form-control form-control-sm jsExternal" type="text" id="js-external-${externalJsId}">
-                            <button class="delete-external-js" id="delete-external-js-${externalJsId}" onclick="deleteExternal('js', ${externalJsId})">Delete</button>
+                            <a href='#'>
+                              <i class="fas fa-trash delete-external-js" id="delete-external-js-${externalJsId}" onclick="deleteExternal('js', ${externalJsId})"></i>
+                            </a>
                           </div>`;
     externalJsLinks.append(externalInput);
     externalJsId += 1;

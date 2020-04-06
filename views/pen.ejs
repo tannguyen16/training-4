@@ -116,7 +116,9 @@
                                       <div id="external-css-<%= external.PenExternalId %>" class="external-css-container"> 
                                         <input class="form-control form-control-sm cssExternal" type="text" data-url="<%= external.Url %>"
                                               value="<%= external.Url %>">
-                                        <button class="delete-external-css" onclick="deleteExternal('css', <%= external.PenExternalId %>)">Delete</button>
+                                        <a href='#'>
+                                          <i class="fas fa-trash delete-external-css" onclick="deleteExternal('css', <%= external.PenExternalId %>)"></i>
+                                        </a>
                                       </div>
                                     <% }); %>
                                     </div>
@@ -133,7 +135,9 @@
                                       <div id="external-js-<%= external.PenExternalId %>" class="external-js-container"> 
                                         <input class="form-control form-control-sm jsExternal" type="text" data-url="<%= external.Url %>"
                                               value="<%= external.Url %>">
-                                        <button class="delete-external-css" onclick="deleteExternal('js', <%= external.PenExternalId %>)">Delete</button>
+                                        <a href='#'>
+                                          <i class="fas fa-trash delete-external-js" onclick="deleteExternal('js', <%= external.PenExternalId %>)"></i>
+                                        </a>
                                       </div>
                                     <% }); %>
                                     </div>

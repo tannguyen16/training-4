@@ -76,14 +76,14 @@ const getPenExternalsById = async (penId, type) => {
   }
 };
 
-const insertCodeToDb = async (insertCodeQuery, penId, codeType, data, transaction) => {
+const insertCodeToDb = async (insertCodeQuery, penId, codeType, data, body, transaction) => {
   await db.sequelize.query(insertCodeQuery, {
     replacements: {
       penId,
       codeType,
       htmlClass: data.htmlClass,
       htmlHead: data.htmlHead,
-      body: data.cssCode,
+      body,
       createdDate: new Date(),
     },
     transaction,
@@ -131,9 +131,9 @@ const insertPen = async (userId, uri, data) => {
                             VALUES
                             (:penId, :codeType, :htmlClass, :htmlHead, :body, :createdDate);`;
 
-      await insertCodeToDb(insertCodeQuery, newPenId, PEN_CODE_TYPE.HTML, data, transaction);
-      await insertCodeToDb(insertCodeQuery, newPenId, PEN_CODE_TYPE.CSS, data, transaction);
-      await insertCodeToDb(insertCodeQuery, newPenId, PEN_CODE_TYPE.JAVASCRIPT, data, transaction);
+      await insertCodeToDb(insertCodeQuery, newPenId, PEN_CODE_TYPE.HTML, data, data.htmlCode, transaction);
+      await insertCodeToDb(insertCodeQuery, newPenId, PEN_CODE_TYPE.CSS, data, data.cssCode, transaction);
+      await insertCodeToDb(insertCodeQuery, newPenId, PEN_CODE_TYPE.JAVASCRIPT, data, data.jsCode, transaction);
 
       const insertExternalQuery = `INSERT INTO "PenExternals"
                             ("PenId", "Type", "Url", "CreatedDate")
@@ -167,7 +167,8 @@ const insertPen = async (userId, uri, data) => {
 
 const updatePen = async (data) => {
   try {
-    const updateQuery = `UPDATE "Pens"
+    await db.sequelize.transaction(async (transaction) => {
+      const updateQuery = `UPDATE "Pens"
                             SET "Name" = :penName, "UpdatedDate" = :updatedDate
                             WHERE "PenId" = :penId;
                         UPDATE "PenCode"
@@ -179,15 +180,49 @@ const updatePen = async (data) => {
                         UPDATE "PenCode"
                             SET "Body" = :jsCode, "HtmlClass" = :htmlClass, "HtmlHead" = :htmlHead, "CreatedDate" = :updatedDate
                             WHERE "PenId" = :penId AND "CodeType" = :codeTypeJs;`;
-    await db.sequelize.query(updateQuery, {
-      replacements: {
-        ...data,
-        updatedDate: new Date(),
-        codeTypeHtml: PEN_CODE_TYPE.HTML,
-        codeTypeCss: PEN_CODE_TYPE.CSS,
-        codeTypeJs: PEN_CODE_TYPE.JAVASCRIPT,
-      },
-      type: db.sequelize.QueryTypes.UPDATE,
+      await db.sequelize.query(updateQuery, {
+        replacements: {
+          ...data,
+          updatedDate: new Date(),
+          codeTypeHtml: PEN_CODE_TYPE.HTML,
+          codeTypeCss: PEN_CODE_TYPE.CSS,
+          codeTypeJs: PEN_CODE_TYPE.JAVASCRIPT,
+        },
+        type: db.sequelize.QueryTypes.UPDATE,
+      });
+
+      const removeExternalsQuery = 'DELETE FROM "PenExternals" WHERE "PenId" = :penId';
+      await db.sequelize.query(removeExternalsQuery, {
+        replacements: {
+          penId: data.penId,
+        },
+        type: db.sequelize.QueryTypes.DELETE,
+      });
+
+      const insertExternalQuery = `INSERT INTO "PenExternals"
+                            ("PenId", "Type", "Url", "CreatedDate")
+                            VALUES
+                            (:penId, :type, :url, :createdDate);`;
+
+      if (data['cssExternal[]']) {
+        if (Array.isArray(data['cssExternal[]'])) {
+          data['cssExternal[]'].forEach(async (url) => {
+            await insertExternalToDb(insertExternalQuery, data.penId, PEN_EXTERNAL_TYPE.CSS, url, transaction);
+          });
+        } else {
+          await insertExternalToDb(insertExternalQuery, data.penId, PEN_EXTERNAL_TYPE.CSS, data['cssExternal[]'], transaction);
+        }
+      }
+
+      if (data['jsExternal[]']) {
+        if (Array.isArray(data['jsExternal[]'])) {
+          data['jsExternal[]'].forEach(async (url) => {
+            await insertExternalToDb(insertExternalQuery, data.penId, PEN_EXTERNAL_TYPE.JAVASCRIPT, url, transaction);
+          });
+        } else {
+          await insertExternalToDb(insertExternalQuery, data.penId, PEN_EXTERNAL_TYPE.JAVASCRIPT, data['jsExternal[]'], transaction);
+        }
+      }
     });
   } catch (err) {
     throw Error(err);

@@ -14,7 +14,9 @@ module.exports = {
     alter table "PenExternals"
       add constraint "PenExternals_Pens_PenId_fk"
         foreign key ("PenId") references "Pens"
-          on delete cascade;`,
+          on delete cascade;
+    ALTER SEQUENCE "PenExternals_PenExternalId_seq" RESTART 10000      
+    `,
   ),
   down: (queryInterface, Sequelize) => queryInterface.dropTable('PenExternals'),
 };
