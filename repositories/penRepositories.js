@@ -140,25 +140,13 @@ const insertPen = async (userId, uri, data) => {
                             VALUES
                             (:penId, :type, :url, :createdDate);`;
 
-      if (data['cssExternal[]']) {
-        if (Array.isArray(data['cssExternal[]'])) {
-          data['cssExternal[]'].forEach(async (url) => {
-            await insertExternalToDb(insertExternalQuery, newPenId, PEN_EXTERNAL_TYPE.CSS, url, transaction);
-          });
-        } else {
-          await insertExternalToDb(insertExternalQuery, newPenId, PEN_EXTERNAL_TYPE.CSS, data['cssExternal[]'], transaction);
-        }
-      }
+      data.cssExternal.forEach(async (url) => {
+        if (url !== '') await insertExternalToDb(insertExternalQuery, newPenId, PEN_EXTERNAL_TYPE.CSS, url, transaction);
+      });
 
-      if (data['jsExternal[]']) {
-        if (Array.isArray(data['jsExternal[]'])) {
-          data['jsExternal[]'].forEach(async (url) => {
-            await insertExternalToDb(insertExternalQuery, newPenId, PEN_EXTERNAL_TYPE.JAVASCRIPT, url, transaction);
-          });
-        } else {
-          await insertExternalToDb(insertExternalQuery, newPenId, PEN_EXTERNAL_TYPE.JAVASCRIPT, data['jsExternal[]'], transaction);
-        }
-      }
+      data.jsExternal.forEach(async (url) => {
+        if (url !== '') await insertExternalToDb(insertExternalQuery, newPenId, PEN_EXTERNAL_TYPE.CSS, url, transaction);
+      });
     });
   } catch (err) {
     throw Error(err);
