@@ -154,7 +154,6 @@ const insertPen = async (userId, uri, data) => {
           if (url !== '') urlPromise = await insertExternalToDb(insertExternalQuery, newPenId, PEN_EXTERNAL_TYPE.CSS, url, transaction);
           return urlPromise;
         });
-        console.log(promises);
         await Promise.all(promises);
       }
 
@@ -214,17 +213,22 @@ const updatePen = async (data) => {
                             (:penId, :type, :url, :createdDate);`;
 
       if (data.cssExternal) {
-        for (let i = 0; i < data.cssExternal.length; i += 1) {
-          const url = data.cssExternal[i];
-          if (url !== '') insertExternalToDb(insertExternalQuery, data.penId, PEN_EXTERNAL_TYPE.CSS, url, transaction);
-        }
+        const promises = data.cssExternal.map(async (url) => {
+          let urlPromise;
+          if (url !== '') urlPromise = await insertExternalToDb(insertExternalQuery, data.penId, PEN_EXTERNAL_TYPE.CSS, url, transaction);
+          return urlPromise;
+        });
+        await Promise.all(promises);
       }
 
       if (data.jsExternal) {
-        for (let i = 0; i < data.jsExternal.length; i += 1) {
-          const url = data.jsExternal[i];
-          if (url !== '') insertExternalToDb(insertExternalQuery, data.penId, PEN_EXTERNAL_TYPE.JAVASCRIPT, url, transaction);
-        }
+        const promises = data.jsExternal.map(async (url) => {
+          let urlPromise;
+          if (url !== '') urlPromise = await insertExternalToDb(insertExternalQuery, data.penId, PEN_EXTERNAL_TYPE.JAVASCRIPT, url, transaction);
+          return urlPromise;
+        });
+
+        await Promise.all(promises);
       }
     });
 
