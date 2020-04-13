@@ -12,7 +12,7 @@ router.post('/', requireLogin, async (req, res, next) => {
   try {
     const penUri = shortid.generate();
     const userId = req.user.UserId;
-    if (req.body.penId === '0') {
+    if (req.body.penId == '0') {
       await penRepositories.insertPen(userId, penUri, req.body);
       res.json(penUri);
     }

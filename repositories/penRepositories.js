@@ -77,31 +77,39 @@ const getPenExternalsById = async (penId, type) => {
 };
 
 const insertCodeToDb = async (insertCodeQuery, penId, codeType, data, body, transaction) => {
-  await db.sequelize.query(insertCodeQuery, {
-    replacements: {
-      penId,
-      codeType,
-      htmlClass: data.htmlClass,
-      htmlHead: data.htmlHead,
-      body,
-      createdDate: new Date(),
-    },
-    transaction,
-    type: db.sequelize.QueryTypes.INSERT,
-  });
+  try {
+    await db.sequelize.query(insertCodeQuery, {
+      replacements: {
+        penId,
+        codeType,
+        htmlClass: data.htmlClass,
+        htmlHead: data.htmlHead,
+        body,
+        createdDate: new Date(),
+      },
+      transaction,
+      type: db.sequelize.QueryTypes.INSERT,
+    });
+  } catch (err) {
+    throw Error(err);
+  }
 };
 
 const insertExternalToDb = async (insertExternalQuery, penId, type, url, transaction) => {
-  await db.sequelize.query(insertExternalQuery, {
-    replacements: {
-      penId,
-      type,
-      url,
-      createdDate: new Date(),
-    },
-    transaction,
-    type: db.sequelize.QueryTypes.INSERT,
-  });
+  try {
+    await db.sequelize.query(insertExternalQuery, {
+      replacements: {
+        penId,
+        type,
+        url,
+        createdDate: new Date(),
+      },
+      transaction,
+      type: db.sequelize.QueryTypes.INSERT,
+    });
+  } catch (err) {
+    throw Error(err);
+  }
 };
 
 const insertPen = async (userId, uri, data) => {
@@ -131,24 +139,33 @@ const insertPen = async (userId, uri, data) => {
                             VALUES
                             (:penId, :codeType, :htmlClass, :htmlHead, :body, :createdDate);`;
 
-      await insertCodeToDb(insertCodeQuery, newPenId, PEN_CODE_TYPE.HTML, data, data.htmlCode, transaction);
-      await insertCodeToDb(insertCodeQuery, newPenId, PEN_CODE_TYPE.CSS, data, data.cssCode, transaction);
-      await insertCodeToDb(insertCodeQuery, newPenId, PEN_CODE_TYPE.JAVASCRIPT, data, data.jsCode, transaction);
-
       const insertExternalQuery = `INSERT INTO "PenExternals"
                             ("PenId", "Type", "Url", "CreatedDate")
                             VALUES
                             (:penId, :type, :url, :createdDate);`;
+
+      await insertCodeToDb(insertCodeQuery, newPenId, PEN_CODE_TYPE.HTML, data, data.htmlCode, transaction);
+      await insertCodeToDb(insertCodeQuery, newPenId, PEN_CODE_TYPE.CSS, data, data.cssCode, transaction);
+      await insertCodeToDb(insertCodeQuery, newPenId, PEN_CODE_TYPE.JAVASCRIPT, data, data.jsCode, transaction);
+
       if (data.cssExternal) {
-        data.cssExternal.forEach(async (url) => {
-          if (url !== '') await insertExternalToDb(insertExternalQuery, newPenId, PEN_EXTERNAL_TYPE.CSS, url, transaction);
+        const promises = data.cssExternal.map(async (url) => {
+          let urlPromise;
+          if (url !== '') urlPromise = await insertExternalToDb(insertExternalQuery, newPenId, PEN_EXTERNAL_TYPE.CSS, url, transaction);
+          return urlPromise;
         });
+        console.log(promises);
+        await Promise.all(promises);
       }
 
       if (data.jsExternal) {
-        data.jsExternal.forEach(async (url) => {
-          if (url !== '') await insertExternalToDb(insertExternalQuery, newPenId, PEN_EXTERNAL_TYPE.CSS, url, transaction);
+        const promises = data.jsExternal.map(async (url) => {
+          let urlPromise;
+          if (url !== '') urlPromise = await insertExternalToDb(insertExternalQuery, newPenId, PEN_EXTERNAL_TYPE.JAVASCRIPT, url, transaction);
+          return urlPromise;
         });
+
+        await Promise.all(promises);
       }
     });
   } catch (err) {
@@ -197,15 +214,17 @@ const updatePen = async (data) => {
                             (:penId, :type, :url, :createdDate);`;
 
       if (data.cssExternal) {
-        data.cssExternal.forEach(async (url) => {
-          if (url !== '') await insertExternalToDb(insertExternalQuery, data.penId, PEN_EXTERNAL_TYPE.CSS, url, transaction);
-        });
+        for (let i = 0; i < data.cssExternal.length; i += 1) {
+          const url = data.cssExternal[i];
+          if (url !== '') insertExternalToDb(insertExternalQuery, data.penId, PEN_EXTERNAL_TYPE.CSS, url, transaction);
+        }
       }
 
       if (data.jsExternal) {
-        data.jsExternal.forEach(async (url) => {
-          if (url !== '') await insertExternalToDb(insertExternalQuery, data.penId, PEN_EXTERNAL_TYPE.JAVASCRIPT, url, transaction);
-        });
+        for (let i = 0; i < data.jsExternal.length; i += 1) {
+          const url = data.jsExternal[i];
+          if (url !== '') insertExternalToDb(insertExternalQuery, data.penId, PEN_EXTERNAL_TYPE.JAVASCRIPT, url, transaction);
+        }
       }
     });
 
