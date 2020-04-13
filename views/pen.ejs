@@ -156,11 +156,10 @@
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script>
-      const penId = `<%= penId %>`;
+      const penId = <%- penId %>;
       const htmlCode = `<%- htmlCode %>`;
       const cssCode = `<%- cssCode %>`;
       const jsCode = `<%- jsCode %>`; 
-      console.log(penId);
     </script>
     <script type="text/javascript" src="/javascripts/panel.js"></script>
   </body>

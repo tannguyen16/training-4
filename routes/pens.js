@@ -10,15 +10,14 @@ const router = express.Router();
 
 router.post('/', requireLogin, async (req, res, next) => {
   try {
-    console.log(req.body);
     const penUri = shortid.generate();
     const userId = req.user.UserId;
-    if (!req.body.penId) {
+    if (req.body.penId === '0') {
       await penRepositories.insertPen(userId, penUri, req.body);
       res.json(penUri);
     }
-    await penRepositories.updatePen(req.body);
-    res.status(200).send();
+    const penUriUpdate = await penRepositories.updatePen(req.body);
+    res.json(penUriUpdate[0].Uri);
   } catch (err) {
     next(err);
   }
@@ -35,7 +34,6 @@ router.get('/:penUri', requireLogin, async (req, res, next) => {
     const cssCode = penCode[1].Body;
     const jsCode = penCode[2].Body;
     const penName = pen.Name;
-    console.log(htmlCode);
     const penExternalsCss = await penRepositories.getPenExternalsById(penId, penRepositories.PEN_EXTERNAL_TYPE.CSS);
     const penExternalsJs = await penRepositories.getPenExternalsById(penId, penRepositories.PEN_EXTERNAL_TYPE.JAVASCRIPT);
     const cssExternal = penExternalsCss;

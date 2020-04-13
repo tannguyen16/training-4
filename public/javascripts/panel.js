@@ -148,8 +148,6 @@ function deleteExternal(type, id) {
 }
 
 $(document).ready(() => {
-  console.log(penId);
-
   penNameContainer = $("#pen-name-container");
   penNameEditContainer = $('#pen-name-edit-container');
 
@@ -191,6 +189,8 @@ $(document).ready(() => {
     for (let i = 0; i < jsExternalLinks.length; i++) {
       jsExternalArray.push($(jsExternalLinks[i]).val());
     }
+    console.log(htmlCode);
+    console.log(penId);
 
     $.post('/pen',
       {
@@ -205,6 +205,7 @@ $(document).ready(() => {
         jsExternal: jsExternalArray,
       },
       (data, status) => {
+        window.alert('Pen saved!');
         window.location.replace(`/pen/${data}`);
       });
   });
