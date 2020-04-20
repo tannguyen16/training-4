@@ -174,7 +174,6 @@ $(document).ready(() => {
       penName = document.querySelector('#pen-name-edit').value;
     }
 
-    console.log(htmlClass.value);
     // const htmlExternalArray = htmlExternal.value;
     // const cssExternalArray = cssExternal.value;
     // const jsExternalArray = jsExternal.value;
@@ -189,8 +188,6 @@ $(document).ready(() => {
     for (let i = 0; i < jsExternalLinks.length; i++) {
       jsExternalArray.push($(jsExternalLinks[i]).val());
     }
-    console.log(htmlCode);
-    console.log(penId);
 
     $.post('/pen',
       {
@@ -206,7 +203,7 @@ $(document).ready(() => {
       },
       (data, status) => {
         window.alert('Pen saved!');
-        window.location.replace(`/pen/${data}`);
+        if (window.location.pathname !== `/pen/${data}`) window.location.replace(`/pen/${data}`);
       });
   });
 

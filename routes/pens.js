@@ -40,7 +40,7 @@ router.get('/:penUri', requireLogin, async (req, res, next) => {
     const jsExternal = penExternalsJs;
 
     res.render('pen', {
-      title: 'Pen', penId, htmlCode, cssCode, jsCode, htmlClass, htmlHead, cssExternal, jsExternal, penName,
+      title: 'Pen', penId, username: req.session.user.Username, htmlCode, cssCode, jsCode, htmlClass, htmlHead, cssExternal, jsExternal, penName,
     });
   } catch (err) {
     next(err);

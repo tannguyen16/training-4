@@ -168,7 +168,6 @@ const insertPen = async (userId, uri, data) => {
       }
     });
   } catch (err) {
-    console.log(err);
     throw Error(err);
   }
 };
@@ -235,7 +234,6 @@ const updatePen = async (data) => {
     const pen = await getPenById(data.penId);
     return pen;
   } catch (err) {
-    console.log(err);
     throw Error(err);
   }
 };
